@@ -1,0 +1,1206 @@
+// a part of mearie.org
+
+// < and > has to be percent-encoded for MSIE
+$logo: url("data:image/svg+xml,%3Csvg version='1.0' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 182 186' fill='%23758'%3E%3Cpath d='M0 0h54v102h-35v52h35v32h-54m34-70h20v24h-20M64 0h54v100a22 22 0 0 0 0 56v30h-54m54-72a12 12 0 0 0 0 28v-28M128 0h54v102h-33v12h33v8h-33v32h33v32h-54m35-52h19v8h-19'/%3E%3C/svg%3E");
+$logo-png: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEABAMAAACuXLVVAAAAElBMVEVHcEx2VYh1VYl2VIh2VIh3VYggL1ZZAAAABXRSTlMAHT9txAN1OB0AAAIvSURBVHja7dpPU4MwEIfhpdU7juMdR73Tqnc6lXuB8P2/iiflT6BFifmN0zdnkj4zSZZlu2Yv7YJRmZmZPYR+tjYDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgNAA93FQAo6P9jUUgGNqthLQvE6PfMmiO7N5wPS6uzHgZGfHWUB+7lk3v2goQG5awMG0gNq0AJeKAblpAY2JAbkY0JgYkIsBjYkBhRqQigG1iQGFGjDegXQScDc50gCA4R3YvK1LSn8BGEy5L9tQgGTfH2dSsn4U2q5Oy0/DtZYkpb3fT0oBoPHOc2RAZeMpkQGFd6EjA7ozuGklgC4M3WgA3Q68SwBdjE9aCaDxJ1RhXkYLAd27+FYDqPx14gJO3hmMDOjiUKkGtNcOSK4ewBnQX8PySiOh/GVUewlRZEDjpYSXANuFteIfZ0Tfp/AC4PbPktIHDSDzZkQGFN4eRAb0Ps1uJID+x2mpALhxeSAUYPPRH8X8x0bWEzwHBCwu0QyKZG8CwLBM+FRGB4yifPK0CxOKl9cJc3WhslIDnBowswcRAbUaMIhFEkClBrhU/b9hrQZMnYK4gEYN8NsHojcwZGqAdxOi95CMBdEBrcsCAFY1MrndYuxsRrQKMOjkUjWzueM+o58QAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wvwCQW4x20xXleUAAAAAElFTkSuQmCC");
+
+$main-color: #758; // main image color
+$dark-color: darken($main-color, 25);
+$light-color: #97a; // lighter color for suppressed text and rules
+$link-color: lighten($light-color, 25); // link background
+$hover-color: lighten($light-color, 40); // hover background
+$inv-link-color: lighten($main-color, 25); // link background in the inverted block
+$keyword-link-color: lighten(#7a9, 20);
+$dead-link-color: lighten(#a53, 30);
+
+$screen-floating-footnote: "screen and (max-width: 54em)";
+$screen-narrow: "screen and (max-width: 49em)";
+$screen-minimal: "screen and (max-width: 35em)";
+
+$main-line-height: 1.8;
+
+
+* {
+    color: inherit;
+}
+article, aside, canvas, details, dialog, figcaption, figure,
+footer, header, hgroup, main, menuitem, nav, section, summary {
+    display: block;
+}
+template {
+    display: none;
+}
+
+////////////////////////////////////////////////////////////
+// font settings
+
+* {
+    font-family: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    text-decoration: inherit;
+}
+body {
+    font-weight: 200;
+    font-style: normal;
+    text-decoration: none;
+}
+strong, b {
+    // we do not use boldface non-intentionally (e.g. sections)
+    font-weight: 700;
+}
+em, i {
+    font-style: italic;
+}
+u {
+    text-decoration: underline;
+}
+s {
+    text-decoration: line-through;
+    color: $main-color;
+}
+
+// this one is boring, as we have to cover *all* possible combinations of elements
+// e.g. <div lang="ja">ja sans <code>ja mono
+//          <span lang="en">en mono <strong>en mono</strong></span></code></div>
+// this is further complicated by various fallback fonts per language
+body, input, select,
+:lang(en) {
+    font-family:
+        // English main
+        "Helvetica Neue", "Helvetica Neue Light", "HelveticaNeue-Light", // OSX
+        "Arial", "Helvetica",
+        sans-serif;
+}
+:lang(ko) {
+    font-family:
+        // Korean main
+        "Apple SD 산돌고딕 Neo", "Apple SD Gothic Neo", "Apple SD Gothic Neo UltraLight", // OSX
+        "나눔고딕", "NanumGothic", // non-OSX, F/OSS main
+        "맑은 고딕", "Malgun Gothic", // Windows secondary
+        "Noto Sans CJK KR Light", "Noto Sans CJK KR", // Android, F/OSS secondary
+        "AppleGothic", // OSX secondary
+
+        // English main
+        "Helvetica Neue", "Helvetica Neue Light", "HelveticaNeue-Light",
+        "Arial", "Helvetica",
+
+        // last-resort
+        "돋움", "Dotum", // Windows last-resort
+        "Luxi Sans",
+        "은 돋움", "UnDotum", // F/OSS secondary
+        "Baekmuk Gulim", // F/OSS last-resort
+        sans-serif;
+}
+:lang(ja) {
+    font-family:
+        // Japanese main
+        "Hiragino Kaku Gothic Pro", // OSX
+        "メイリオ", "Meiryo", // Windows
+        "Noto Sans CJK JP Light", "Noto Sans CJK JP", // Android, F/OSS
+
+        // English main
+        "Helvetica Neue", "Helvetica Neue Light", "HelveticaNeue-Light",
+        "Arial", "Helvetica",
+
+        // last-resort
+        // mostly variants of pre-Vista Windows fonts
+        "MS UI Gothic", "ＭＳ Ｐゴシック", "MS Gothic",
+        "IPAUIGothic", "IPAPGothic",
+        sans-serif;
+}
+code, pre, var, samp, kbd, textarea {
+    &, &:lang(en), & :lang(en) {
+        font-family:
+            // English main
+            "Andale Mono", // OSX/Windows
+            "Monaco", // OSX
+
+            // last-resort
+            "Lucida Console", // Windows secondary + F/OSS
+            monospace;
+    }
+    &:lang(ko), & :lang(ko) {
+        font-family:
+            // Korean main
+            // well, not really, as there are no usable monospace Korean fonts
+            // that ship with the common OSes right now
+            "나눔고딕코딩", "NanumGothicCoding", "나눔고딕_코딩", "NanumGothic_Coding",
+            "Noto Sans Mono CJK KR", // Android
+
+            // English main
+            "Andale Mono",
+            "Monaco",
+
+            // last-resort
+            //"맑은 고딕", "Malgun Gothic", // Windows secondary, can't really use this
+            "AppleGothic",
+            "Lucida Console",
+            "돋움체", "DotumChe", // Windows last-resort
+            "Luxi Mono",
+            monospace;
+    }
+}
+
+////////////////////////////////////////////////////////////
+// main layout
+
+//  gutter                   content
+// <------> <--------------------------------------->
+//   6em  >-<                  39em
+//        1em
+//
+//             mobile content
+//     <---------------------------->
+// <-->            flexible          <-->
+// 1.5em                            1.5em
+
+$gutter-width: 6em; // also logo width/height
+$margin-width: $gutter-width + 1em;
+$content-width: 39em;
+$screen-width: $margin-width + $content-width;
+$nav-height: 1.8em; // also nav logo width/height
+$nav-bottom: $nav-height + 2em * 0.8;
+$nav-sep-width: 0.8em;
+$flex-left-margin: 1.5em;
+$flex-right-margin: 1.5em;
+
+html {
+    margin-left: $margin-width;
+    overflow-x: hidden;
+    @media #{$screen-narrow} {
+        margin-left: 0;
+    }
+}
+
+body {
+    width: $content-width;
+    margin: 0 auto;
+    line-height: $main-line-height;
+
+    @media #{$screen-narrow} {
+        padding-left: $flex-left-margin;
+        padding-right: $flex-right-margin;
+        width: auto;
+    }
+}
+
+body>header {
+    display: relative;
+    min-height: 6em;
+    position: relative;
+    padding-top: 1px;
+    vertical-align: bottom;
+
+    h1 {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        margin: 0 0 (0.4em / $main-line-height) 0;
+    }
+
+    @media #{$screen-narrow} {
+        padding-top: 0;
+        h1 {
+            text-align: left;
+            width: auto;
+            margin-left: ($margin-width / 2.0);
+            .parent { text-align: left; }
+        }
+    }
+
+    @media #{$screen-minimal} {
+        h1 {
+            position: static;
+            text-align: center;
+            margin-left: 0;
+            .parent { text-align: center; }
+        }
+    }
+}
+
+body.mearie-nav-present>header {
+    margin-top: $nav-bottom;
+}
+
+body.mearie-index>header {
+    min-height: 0;
+
+    // no narrow/minimal layout split for index
+    @media #{$screen-narrow} {
+        h1 {
+            position: static;
+            text-align: center;
+            margin-left: 0;
+        }
+    }
+}
+
+#mearie-logo {
+    position: absolute;
+    width: 6em;
+    height: 6em;
+    left: 50%;
+    top: 0;
+    margin-left: (-$margin-width / 2 - $screen-width / 2);
+    z-index: 100;
+
+    @media #{$screen-narrow} {
+        float: left;
+        position: relative;
+        left: 0;
+        top: 0;
+        margin-left: 0;
+    }
+
+    @media #{$screen-minimal} {
+        width: 6em;
+        margin: 0 auto;
+        float: none;
+    }
+
+    body.mearie-index & {
+        // no narrow/minimal layout split for index
+        @media #{$screen-narrow} {
+            width: 6em;
+            margin: 0 auto;
+            float: none;
+        }
+    }
+
+    &>a {
+        display: block;
+        width: 6em;
+        height: 6em; // explicit about the height for MSIE
+
+        // hide the sitename, only visible when scrolled
+        line-height: 1;
+        overflow: hidden;
+
+        // suppresses the existing <a> styles
+        box-shadow: none;
+        transition: none;
+        background: transparent;
+        html.mearie-ancient & { background-image: none; }
+
+        &:after { display: none; }
+
+        &>svg {
+            width: 6em;
+            height: 6em;
+            fill: $main-color;
+        }
+        &:hover>svg {
+            fill: $light-color;
+        }
+    }
+}
+
+body>nav {
+    position: fixed;
+    font-size: 80%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: ($nav-bottom / 0.8);
+    color: white;
+    background-color: $main-color;
+    border-bottom: 1px solid $main-color;
+    overflow: hidden;
+    z-index: 101;
+
+    // temporary
+    &>p.warning {
+        background-color: red;
+        line-height: 1;
+        padding: 0.5em 0;
+        margin: 0;
+        text-align: center;
+        a { background: none; box-shadow: none; text-decoration: underline; }
+        @media #{$screen-minimal} { span.long { display: none; } }
+    }
+
+    &>ul {
+        position: absolute;
+        left: 50%;
+        width: auto;
+        // subtract the horiz margin to align the first item with the text
+        margin: 0 0 0 (($margin-width / 2 - $content-width / 2) / 0.8 - $nav-sep-width / 2);
+        &>li {
+            list-style: none;
+            display: inline;
+            float: left;
+            &>a {
+                display: block;
+                padding: (($nav-height / 0.8 - 1em) / 2) ($nav-sep-width / 2);
+                line-height: 1;
+                height: ($nav-height / 0.8);
+                color: white;
+                box-shadow: none;
+                html.mearie-ancient & { background-image: none; }
+                &:hover { background-color: $light-color; }
+                &:after { display: none; }
+
+                // hack to align with sitename (ugh)
+                padding: 0 ($nav-sep-width / 2);
+                line-height: 0;
+                &:before {
+                    content: "";
+                    display: inline-block;
+                    width: 0;
+                    height: ($nav-height / 0.8);
+                    vertical-align: middle;
+                }
+            }
+        }
+
+        @media #{$screen-narrow} {
+            left: ($flex-left-margin / 0.8 - $nav-sep-width / 2);
+            margin-left: 0;
+        }
+    }
+
+    &>form.search {
+        position: absolute;
+        right: 50%;
+        width: auto;
+        height: ($nav-height / 0.8);
+        margin: 0 ((-$margin-width / 2 - $content-width / 2) / 0.8) 0 0;
+        line-height: ($nav-height / 0.8);
+        background-color: $main-color;
+        z-index: 1;
+
+        // hack to align with sitename (ugh)
+        padding: 0 ($nav-sep-width / 2);
+        line-height: 0;
+        &:before {
+            content: "";
+            display: inline-block;
+            width: 0;
+            height: ($nav-height / 0.8);
+            vertical-align: middle;
+        }
+
+        input[type=search] {
+            background: transparent;
+            color: white;
+            border: 0;
+            font-size: 100%;
+            width: 12em;
+            height: (1em / 0.8);
+            padding: 0;
+            line-height: 1;
+            border-bottom: 1px white solid;
+        }
+
+        input[type=submit] {
+            display: none;
+        }
+
+        @media #{$screen-narrow} {
+            right: 0;
+            margin-right: 0;
+            padding-right: ($flex-right-margin / 0.8);
+            padding-left: $nav-sep-width;
+            input[type=search] { width: 10em; }
+        }
+
+        @media #{$screen-minimal} {
+            input[type=search] {
+                width: 5em;
+                transition: width .1s linear;
+                &:focus { width: 10em; }
+            }
+        }
+    }
+
+    @media print { display: none; }
+}
+
+body.mearie-scrolled {
+    // #mearie-logo itself remains as a placeholder, keeping the header height
+    #mearie-logo {
+        z-index: auto; // subtle! move the stacking context to the link.
+
+        // and this is yet another catch. the current scroll detection is not
+        // robust enough so it sometimes misses events especially on mobile.
+        // consequently it is possible that we see the placeholder while "scrolled";
+        // we had it enough, so let's fill the placeholder with another copy of logo.
+        background: $logo 0 0 no-repeat;
+
+        &>a {
+            html.mearie-ancient & { display: none; } // reject IE8
+
+            z-index: 102;
+            font-size: 80%;
+            position: fixed;
+
+            left: 50%;
+            top: (($nav-bottom - $nav-height) / 0.8);
+            width: ($margin-width / 0.8 - $nav-sep-width / 2);
+            height: ($nav-height / 0.8);
+            margin-left: ((-$margin-width / 2 - $content-width / 2) / 0.8);
+            line-height: 0;
+            color: white;
+            font-weight: bold;
+
+            transition: background-color .1s cubic-bezier(.33,.66,.66,1);
+            &:hover { background-color: $light-color; }
+
+            &>svg {
+                width: ($nav-height / 0.8);
+                height: ($nav-height / 0.8);
+                vertical-align: middle;
+                fill: white;
+                &:lang(ko) { margin-right: 0.2em; }
+            }
+
+            @media #{$screen-narrow} {
+                width: ($nav-height / 0.8);
+                left: ($flex-left-margin / 0.8);
+                margin-left: 0;
+                line-height: 1; // hide it again
+                &:hover {
+                    background-color: transparent;
+                    svg { fill: $link-color; }
+                }
+            }
+        }
+    }
+
+    @media #{$screen-narrow} {
+        // give a room for logo
+        &>nav>ul {
+            left: (($flex-left-margin + $nav-height) / 0.8 + $nav-sep-width / 2);
+        }
+    }
+}
+
+body>footer {
+    margin-top: 4em;
+    margin-bottom: 2em;
+    font-size: 80%;
+    color: $main-color;
+    line-height: 1.2;
+
+    p, address { margin: 0.5em 0; }
+}
+
+i.mearie-logo:before {
+    content: "";
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background: $logo 0 0 no-repeat;
+    vertical-align: text-bottom;
+
+    html.mearie-ancient & {
+        background: url(../favicon.ico) 0 50% no-repeat;
+        width: 16px;
+    }
+}
+
+.mearie-entries {
+    margin-top: (-0.5em * 1.4); // account for h3 top-margin
+
+    -webkit-column-count: 2; -webkit-column-gap: 1em;
+       -moz-column-count: 2;    -moz-column-gap: 1em;
+            column-count: 2;         column-gap: 1em;
+
+    @media #{$screen-minimal} {
+        -webkit-column-count: 1;
+           -moz-column-count: 1;
+                column-count: 1;
+    }
+
+    .mearie-entry {
+        // a workaround for the absence of break-* properties
+        display: inline-block;
+        width: 100%;
+
+        &>h3 {
+            border-bottom: none;
+            margin-top: 0.5em;
+            margin-bottom: 0;
+        }
+        &>.mearie-entrymeta {
+            color: $main-color;
+            font-size: 80%;
+        }
+        &>p {
+            margin: 0;
+        }
+    }
+}
+
+.mearie-margin {
+    float: left;
+    font-size: 80%;
+    line-height: 1.5;
+    width: ($gutter-width / 0.8);
+    margin-left: (-$margin-width / 0.8);
+}
+
+////////////////////////////////////////////////////////////
+// block elements
+
+h1, h2, h3, h4, h5, h6 {
+    position: relative;
+    color: $main-color;
+
+    &[id]:after {
+        content: '\a0#';
+    }
+    &>.header-selflink:after {
+        display: none;
+    }
+
+    &[id]:after, &>.header-selflink {
+        display: none;
+        font-size: 75%;
+        color: $light-color;
+    }
+    &[id]:hover:after, &:hover>.header-selflink {
+        display: inline;
+    }
+    &.header-has-selflink:after { // replaced by .header-selflink
+        display: none !important;
+    }
+}
+
+h1, h2, h3, h4, h5 {
+    font-weight: 400;
+    margin: 1em 0;
+
+    &>span.header-section-number {
+        position: relative;
+        display: block;
+        margin: 0 0 (-1em * $main-line-height) (-$gutter-width);
+        width: $gutter-width;
+        text-align: right;
+        color: $light-color;
+
+        @media #{$screen-narrow} {
+            display: inline;
+            margin: 0;
+            &:after { display: none; }
+        }
+
+        &:after { content: "\a0"; }
+    }
+}
+
+h1 {
+    font-size: 200%;
+    line-height: 1.2;
+    text-shadow: $link-color 0.1ex 0.1ex 1px;
+
+    .parent {
+        display: block;
+        font-size: 50%;
+        line-height: $main-line-height;
+    }
+    .parentsep {
+        display: none;
+    }
+    .date {
+        display: block;
+        position: relative;
+        width: 6em;
+        text-align: right;
+        margin-left: -7em;
+        float: left;
+        line-height: $main-line-height;
+    }
+
+    @media #{$screen-narrow} {
+        text-align: center;
+
+        .parentsep, .date { display: inline; }
+
+        .date, .parent {
+            position: static;
+            text-align: center;
+            float: none;
+            width: auto;
+            margin: 0;
+        }
+    }
+}
+
+h2 { font-size: 160%; border-bottom: 2px solid $link-color; }
+h3 { font-size: 140%; border-bottom: 1px solid $link-color; }
+h4 { font-size: 120%; }
+h5 { font-size: 100%; }
+
+h6 {
+    font-weight: 700;
+    font-size: 100%;
+
+    float: left;
+    margin: 0;
+
+    &>span.header-section-number { display: none; }
+    &:after { content: "\a0"; }
+}
+
+p {
+    margin: 1em 0;
+    dd>& { margin: 0; }
+}
+
+li {
+    margin: 0;
+}
+
+dt {
+    margin: 0;
+    color: $main-color;
+    font-weight: 400;
+}
+
+dd {
+    margin: 0 0 0 1em;
+}
+
+ul, ol, dl {
+    margin: 0;
+    padding: 0;
+
+    ul, ol {
+        margin-left: 1em;
+    }
+}
+
+blockquote {
+    clear: both;
+    margin: 0 0 0 -1.5em;
+    padding: 0 0 0 0.5em;
+    border-left: 1em solid $link-color;
+
+    &:before {
+        display: block;
+        float: left;
+
+        content: "";
+
+        width: 0;
+        height: 0;
+        line-height: 0;
+
+        margin-left: -(0.6em + 0.2em + 0.5em);
+        margin-top: 0.2em;
+
+        border-width: 0.6em 0.6em 0 0;
+        border-color: white transparent transparent transparent;
+        border-style: solid;
+    }
+}
+
+pre {
+    clear: both;
+    background-color: $dark-color;
+    color: white;
+    overflow: auto;
+    line-height: 1.5;
+
+    margin: 1em 0 1em -1.5em;
+    padding: 0.2em 0;
+    border-left: 1.5em solid $dark-color;
+    border-right: 0.2em solid $dark-color;
+
+    // override foreground colors
+    ins, del {
+        background: none;
+    }
+    code {
+        color: white;
+    }
+    a {
+        box-shadow: inset 0 -0.6ex 0 $main-color;
+        &:hover {
+            background-color: $main-color;
+        }
+        &:after {
+            display: none; // can't really control this
+        }
+    }
+
+    &:before {
+        position: absolute;
+        display: block;
+        float: left;
+
+        content: "";
+
+        width: 0;
+        height: 0;
+        line-height: 0;
+
+        margin-left: -(0.6em + 0.2em + 0.5em);
+        margin-top: 0;
+
+        border-width: 0.6em 0.6em 0 0;
+        border-color: white transparent transparent transparent;
+        border-style: solid;
+    }
+
+    // invidiual size adjustments
+    &.small, .small & {
+        font-size: 80%;
+        line-height: 1.4;
+        padding: (0.2em / 0.8) 0;
+        margin-left: -(1.5em / 0.8);
+        border-left-width: (1.5em / 0.8);
+        border-right-width: (0.2em / 0.8);
+        &:before {
+            border-width: (0.6em / 0.8) (0.6em / 0.8) 0 0;
+            margin-left: -((0.6em + 0.2em + 0.5em) / 0.8);
+        }
+    }
+    &.extrasmall, .extrasmall & {
+        font-size: 60%;
+        line-height: 1.2;
+        padding: (0.2em / 0.6) 0;
+        margin-left: -(1.5em / 0.6);
+        border-left-width: (1.5em / 0.6);
+        border-right-width: (0.2em / 0.6);
+        &:before {
+            border-width: (0.6em / 0.6) (0.6em / 0.6) 0 0;
+            margin-left: -((0.6em + 0.2em + 0.5em) / 0.6);
+        }
+    }
+}
+
+hr {
+    display: block;
+    width: 100%;
+    height: 0.5em;
+    margin: 1em 0;
+    padding: 0;
+    border: 0;
+
+    background: url("data:image/svg+xml,%3Csvg version='1.0' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 1' fill='%23758'%3E%3Cpath d='M1 0h1l-1 1h-1z'/%3E%3C/svg%3E") 50% 0 repeat-x;
+    background-size: 1em 0.5em;
+
+    html.mearie-ancient & {
+        // fixed to 32x16 image
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAQAgMAAAAKbpXKAAAADFBMVEV3VYh0Wop3VYd2VIgnXdv1AAAABHRSTlP+AYF/NsqongAAADtJREFUGNMtyjENhAAARbEmTCcIKY/ciBRM4Jfld67qwqH646e6caoevFaykpWsZCUrWclKVrKSlaz0AQdpGYHln60UAAAAAElFTkSuQmCC") 50% 0 repeat-x;
+        * & { background-color: $main-color; }
+    }
+}
+
+table {
+    margin: 1em auto;
+    border-top: 0.2em solid $main-color;
+    border-bottom: 0.2em solid $main-color;
+    border-collapse: collapse;
+
+    tr:hover { background-color: $hover-color; }
+
+    th {
+        color: $main-color;
+        font-weight: 400;
+    }
+
+    th, td {
+        padding: 0.1em 0.3em;
+        vertical-align: top;
+    }
+
+    thead>tr, tr.header {
+        &>th, &>td {
+            vertical-align: bottom;
+        }
+    }
+
+    thead>tr, tfoot>tr, tr.header {
+        &>th, &>td {
+            border-top: 0.2em solid $main-color;
+            border-bottom: 0.2em solid $main-color;
+        }
+    }
+
+    tbody>tr {
+        &>th, &>td {
+            border-top: 0.1em solid $link-color;
+            border-bottom: 0.1em solid $link-color;
+        }
+    }
+}
+
+article {
+    background-image: -webkit-linear-gradient(top, $hover-color, white);
+    background-image:    -moz-linear-gradient(top, $hover-color, white);
+    background-image:     -ms-linear-gradient(top, $hover-color, white);
+    background-image:      -o-linear-gradient(top, $hover-color, white);
+    background-image:         linear-gradient(to bottom, $hover-color, white 1em);
+    background-size: 100% 1em;
+    background-position: top;
+    background-repeat: repeat-x;
+    html.mearie-ancient & {
+        background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAQEAIAAAAIbV6jAAAAN0lEQVQYGWP6/v3r1x8/mBg7GVczVoCoNQwVTAydDFDeajCPcQ1YjgHKA8t1AVWWE6USYSZDBQCcUx8b/PfMPQAAAABJRU5ErkJggg==");
+    }
+
+    margin-left: -7em;
+    padding-left: 7em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+
+    @media #{$screen-narrow} {
+        // fill the margin
+        margin-left: -$flex-left-margin;
+        margin-right: -$flex-right-margin;
+        padding-left: $flex-left-margin;
+        padding-right: $flex-right-margin;
+    }
+}
+
+figure {
+    margin: 1em 0;
+    text-align: center;
+
+    figcaption {
+        color: $main-color;
+    }
+}
+
+nav.more {
+    text-align: center;
+    font-weight: bold;
+}
+
+// adjust scroll with link target for navigation bar
+// http://stackoverflow.com/a/21707103 (and some tweaks)
+:target:before {
+    content: "";
+    display: block;
+    position: relative;
+    // this should absolutely be rem
+    height: #{$nav-bottom / 1em * 1rem};
+    margin: #{-$nav-bottom / 1em * 1rem} 0 0 0;
+    visibility: hidden;
+}
+
+////////////////////////////////////////////////////////////
+// inline elements
+
+a {
+    // Wired-style underlines http://hjun.me/?p=836
+    box-shadow: inset 0 -0.6ex 0 $link-color;
+    transition: background-color .1s cubic-bezier(.33,.66,.66,1);
+
+    html.mearie-ancient & {
+        // fixed to 1x6 pattern
+        background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAGAQMAAAA43mZyAAAABlBMVEXUxdv////81pjXAAAACklEQVQYGWNAAgAADAABPWFQnAAAAABJRU5ErkJggg==");
+        background-position: bottom;
+        background-repeat: repeat-x;
+    }
+
+    &:hover {
+        background-color: $link-color;
+    }
+
+    // keyword links
+    &.keyword {
+        box-shadow: inset 0 -0.6ex 0 $keyword-link-color;
+        html.mearie-ancient & {
+            // fixed to 1x6 pattern
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAGAQMAAAA43mZyAAAABlBMVEW20cj///9uJv+1AAAACklEQVQYGWNAAgAADAABPWFQnAAAAABJRU5ErkJggg==");
+        }
+        &:hover {
+            background-color: $keyword-link-color;
+        }
+    }
+
+    // dead links (mostly keywords)
+    &.dead {
+        box-shadow: inset 0 -0.6ex 0 $dead-link-color;
+        transition: box-shadow .1s cubic-bezier(.33,.66,.66,1);
+        cursor: not-allowed;
+        html.mearie-ancient & {
+            // fixed to 1x6 pattern
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAGAQMAAAA43mZyAAAABlBMVEXgq5b///8sQZSgAAAACklEQVQYGWNAAgAADAABPWFQnAAAAABJRU5ErkJggg==");
+        }
+        &:hover {
+            background-color: transparent;
+            box-shadow: inset 0 -0.3ex 0 $dead-link-color;
+        }
+    }
+
+    // pandoc-generated footnotes
+    &.footnote {
+        box-shadow: none;
+        html.mearie-ancient & { background-image: none; }
+
+        font-size: 80%;
+        background-color: $main-color;
+        color: white;
+        display: inline-block;
+        border-radius: 100%;
+        width: 1em;
+        height: 1em;
+        text-align: center;
+        padding: 0;
+
+        &>sup>span { display: none; }
+
+        &:hover { background-color: $light-color; }
+
+        &:after { display: none; }
+    }
+    &.footnote-back {
+        &:after { display: none; }
+    }
+
+/*
+    &:before {
+        content: "";
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        margin-right: 2pt;
+        background: $logo 0 0 no-repeat;
+    }
+*/
+
+    &:after {
+        color: $main-color;
+        font-size: 70%;
+    }
+
+    &[href*="://"]:after { content: "◈"; vertical-align: super; }
+    &[href*="://"][href*=".wikipedia.org"]:after { content: "W"; font-family: serif; }
+    &[href^="#"]:after { content: "#"; }
+    //&[href^="/"]:after { content: attr(href); }
+
+    &[title]:after { content: attr(title); }
+    &.keyword[title]:after { display: none; } // displays a resolved keyword
+
+    /*
+    @media all {
+        &:after {
+            color: $light-color;
+            font-style: italic;
+            font-size: 70%;
+            content: attr(href);
+        }
+    }
+    */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+sup, sub {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+}
+
+abbr {
+    border-bottom: 1px dashed #000;
+
+    small &, s &, h1 &, h2 &, h3 &, h4 &, h5 &, h6 & {
+        border-bottom-color: $main-color;
+    }
+}
+
+ins {
+    background-color: #eef;
+    border: 0.3ex solid #aae;
+}
+del {
+    background-color: #fee;
+    border: 0.3ex solid #eaa;
+}
+
+small {
+    font-size: smaller;
+    color: $main-color;
+}
+code {
+    color: $main-color;
+}
+
+div.center {
+    text-align: center;
+}
+
+////////////////////////////////////////////////////////////
+// mearie-specific components
+
+section.footnotes {
+    &>hr { display: none; }
+
+    font-size: 80%;
+    border-top: 1px solid $main-color;
+    border-bottom: 1px solid $main-color;
+    margin: (2em/0.8) (-1em/0.8);
+    padding: 0 (1em/0.8);
+
+    &>section {
+        clear: both;
+    }
+
+    &:before {
+        display: inline;
+        float: right;
+        text-align: right;
+        width: auto;
+        height: 1em;
+        margin: -1.2em 0 0 0;
+        border-bottom: 0.2em solid $main-color;
+        font-size: (100% / 0.8);
+        font-weight: 400;
+        line-height: 1;
+        color: $main-color;
+    }
+    &:before { content: "Notes"; }
+    &:lang(ko):before { content: "주석"; }
+
+    @media #{$screen-narrow} {
+        // fill the margin
+        margin-left: -($flex-left-margin / 0.8);
+        margin-right: -($flex-right-margin / 0.8);
+        padding-left: ($flex-left-margin / 0.8);
+        padding-right: ($flex-right-margin / 0.8);
+    }
+}
+
+#mearie-tooltip {
+    // the tooltip itself is a zero-width container which pins
+    // the actual container to the text flow.
+    display: inline-block;
+    width: 0;
+    height: 0;
+
+    // ...and this div actually floats.
+    &>div {
+        position: absolute;
+        z-index: 100;
+
+        width: 18em;
+        min-height: 1em;
+        margin-left: -15em;
+        margin-top: 1ex;
+        padding: 0.2em 0.2em 0 0.2em;
+
+        border-width: 0.5em 0 0 0;
+        border-color: $main-color;
+        border-style: solid;
+        box-shadow: 0 0 1ex $main-color;
+        background: white;
+        color: black;
+
+        html.mearie-ancient & { border-width: 0.5em 1px 1px 1px; }
+
+        font-size: 80%;
+        text-align: left;
+        line-height: 1.5;
+        cursor: default;
+
+        // arrow
+        &:before {
+            content: "";
+
+            position: absolute;
+
+            right: ((18em - 15em) + 0.8em / 2);
+            top: -(0.6em * 0.8 + 0.5em);
+            width: 0;
+            height: 0;
+            line-height: 0;
+
+            border-width: 0 0.6em 0.6em 0.6em;
+            border-color: transparent transparent $main-color transparent;
+            border-style: solid;
+        }
+
+        .footnote-back {
+            display: none;
+        }
+
+        // reset any negative margin
+        p, blockquote, pre {
+            margin: 0 0 0.2em 0;
+        }
+        h6 {
+            line-height: 1.5;
+        }
+
+        @media #{$screen-floating-footnote} {
+            position: fixed;
+
+            // having both `left` and `right` in the `fixed` position works!
+            // this is useful for making the width *plus* the padding equals to 100%.
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: auto;
+            max-height: 6em;
+            min-width: auto;
+            max-width: none;
+
+            margin: 0 auto;
+            padding: 1em ($flex-right-margin / 0.8) 1em ($flex-left-margin / 0.8);
+            border-bottom: 0;
+            border-left: 0;
+            border-right: 0;
+
+            overflow: auto;
+
+            // restore negative margin
+            p {
+                margin-bottom: 1em;
+            }
+            blockquote, pre {
+                margin-bottom: 1em;
+                margin-left: -$flex-left-margin;
+            }
+
+            // it's not easy to float the arrow at the correct position, hide it
+            &:before {
+                display: none;
+            }
+        }
+    }
+}
+
+#mearie-cv {
+    .contact {
+        text-align: center;
+        strong { font-size: 150%; }
+    }
+
+    dt {
+        float: left;
+        width: 5.33em;
+    }
+    dd {
+        margin-left: 6.33em;
+        margin-bottom: 1em;
+    }
+}
+
+#mearie-sitemap {
+    table {
+        width: 100%;
+        tr {
+            th { text-align: left; width: 4em; }
+            td time { float: right; font-size: smaller; color: $main-color; }
+        }
+    }
+}
+
+#mearie-keywords {
+    li {
+        list-style: none;
+        display: inline;
+        margin: 0 1em 0 0;
+    }
+}
+
+// vim: ts=4 sts=4 sw=4 et

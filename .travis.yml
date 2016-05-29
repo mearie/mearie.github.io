@@ -1,0 +1,26 @@
+sudo: false
+language: c # seems to have no setup
+env:
+  global:
+    secure: "tY9mRQ0+7+DIJbnktJ97XuMw/HOk3gm2JucROX5p8BGh3VHkUXlEzE1NWky5yrTZr9gC11qhUxhkkfjzNTXM5tJ63V16HnQuFzhvyKn7jrz3uATm/7U3KxN/SitTRfzVnjorl/GWQ3tNLC6VWJnCVogDrIVkhh14o0XA1BqPblc="
+branches:
+  only:
+    - source
+before_script:
+  - |
+    [ -x ~/usr/bin/pandoc ] || (
+        cd ~
+        rm -rf ~/usr
+        wget https://github.com/jgm/pandoc/releases/download/1.17.0.2/pandoc-1.17.0.2-1-amd64.deb
+        ar x pandoc-1.17.0.2-1-amd64.deb
+        tar xzvf data.tar.gz
+    )
+  - export PATH=$HOME/usr/bin:$PATH
+  - python -V
+  - pandoc -v | head -2
+script:
+  - '[ "$TRAVIS_PULL_REQUEST" == "false" ] && TZ=KST-9 make update-source OUTPUT=~/target && TZ=KST-9 make travis OUTPUT=~/target'
+cache:
+  directories:
+    - $HOME/usr
+    - $HOME/target

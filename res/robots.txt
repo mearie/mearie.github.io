@@ -1,0 +1,7 @@
+# Hello robots! We love you so much that we open everything up for you.
+# So just make sure not to index these please:
+# (Feel free to visit them, they don't harm you anyway)
+
+User-agent: *
+Disallow:
+
