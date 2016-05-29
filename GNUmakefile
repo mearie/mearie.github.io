@@ -104,8 +104,8 @@ $(foreach TMPL,index softwares documents sitemap keywords journal,$(eval $(call 
 .PHONY: prepare-autobuild
 prepare-autobuild: $(OUTPUT)
 	@$(call I, 7, ===, preparing autobuild)
-	@cd $(OUTPUT) && $(GIT) pull --quiet --depth=1 origin $(BRANCH) || echo 'Warning: We are creating a branch now!'
-	@cd $(OUTPUT) && $(GIT) checkout $(BRANCH) && $(GIT) branch -D autobuild && $(GIT) checkout --orphan autobuild
+	@cd $(OUTPUT) && $(GIT) pull --quiet --depth=1 origin $(BRANCH) || echo 'Warning: We are creating a branch now!' 1>&2
+	@cd $(OUTPUT) && { $(GIT) branch -D autobuild 2>/dev/null; $(GIT) checkout --quiet -f --orphan autobuild $(ORIGIN); }
 
 .PHONY: update-source
 update-source: $(OUTPUT) prepare-autobuild

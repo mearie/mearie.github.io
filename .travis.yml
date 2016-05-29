@@ -19,8 +19,9 @@ before_script:
   - python -V
   - pandoc -v | head -2
 script:
-  - '[ "$TRAVIS_PULL_REQUEST" == "false" ] && TZ=KST-9 make update-source OUTPUT=~/target && TZ=KST-9 make travis OUTPUT=~/target'
+  - '[ "$TRAVIS_PULL_REQUEST" == "false" ] && TZ=KST-9 make update-source TMP=~/tmp OUTPUT=~/target && TZ=KST-9 make travis TMP=~/tmp OUTPUT=~/target'
 cache:
   directories:
     - $HOME/usr
+    - $HOME/tmp
     - $HOME/target
