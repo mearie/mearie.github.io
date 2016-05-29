@@ -81,12 +81,12 @@ $(OUTPUT)/favicon.ico: $(RES)/mearie.ico
 	@$(call I, 1, copy, /favicon.ico)
 	@cp $< $@
 
-override GENERATED += $(wildcard $(OUTPUT)/res/*.css)
+override GENERATED += $(patsubst $(RES)/styles/%.css,$(OUTPUT)/res/%.css,$(wildcard $(RES)/styles/*.css))
 $(OUTPUT)/res/%.css: $(RES)/styles/%.css | $(OUTPUT)/res
 	@$(call I, 1, copy, /res/$*.css)
 	@cp $< $@
 
-override GENERATED += $(wildcard $(OUTPUT)/res/*.js)
+override GENERATED += $(patsubst $(RES)/scripts/%.js,$(OUTPUT)/res/%.js,$(wildcard $(RES)/scripts/*.js))
 $(OUTPUT)/res/%.js: $(RES)/scripts/%.js | $(OUTPUT)/res
 	@$(call I, 1, copy, /res/$*.js)
 	@cp $< $@
@@ -104,7 +104,7 @@ $(foreach TMPL,index softwares documents sitemap keywords journal,$(eval $(call 
 .PHONY: prepare-autobuild
 prepare-autobuild: $(OUTPUT)
 	@$(call I, 7, ===, preparing autobuild)
-	cd $(OUTPUT) && if $(GIT) fetch --quiet --depth=1 origin $(BRANCH); then \
+	@cd $(OUTPUT) && if $(GIT) fetch --quiet --depth=1 origin $(BRANCH); then \
 		$(GIT) checkout --quiet $(BRANCH) && \
 		$(GIT) branch --quiet -D autobuild 2>/dev/null; \
 		$(GIT) checkout --quiet -f --orphan autobuild FETCH_HEAD; \
@@ -116,8 +116,8 @@ prepare-autobuild: $(OUTPUT)
 .PHONY: update-source
 update-source: $(OUTPUT) prepare-autobuild
 	@$(call I, 7, ===, updating source)
-	@$(GIT) ls-tree --name-only -zrt HEAD | xargs -0 touch -t 197101010000
-	@-$(GIT) diff --name-only -z $$($(GIT) rev-list -n1 --before="$$(cd $(OUTPUT) && $(GIT) log -1 --format=format:%ad $(BRANCH))" HEAD) HEAD | xargs -0 touch -c
+	@$(GIT) ls-tree --name-only -zrt HEAD | xargs -0 touch -t 197101010000 2>/dev/null
+	@-$(GIT) diff --name-only -z $$($(GIT) rev-list -n1 --before="$$(cd $(OUTPUT) && $(GIT) log -1 --format=format:%ad $(BRANCH))" HEAD) HEAD | xargs -0 touch -c 2>/dev/null
 
 .PHONY: check-schema
 check-schema:
@@ -297,7 +297,7 @@ purge-unused-target: $(OUTPUT) | check-schema
 .PHONY: commit-target
 commit-target:
 	@$(call I, 7, ===, making a new commit)
-	@cd $(OUTPUT) && $(GIT) add -f -A . && $(GIT) commit -m '' --allow-empty-message
+	@cd $(OUTPUT) && $(GIT) add -f -A . && $(GIT) commit --quiet -m '' --allow-empty-message
 
 .PHONY: push-target
 push-target:
