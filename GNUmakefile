@@ -105,7 +105,7 @@ $(foreach TMPL,index softwares documents sitemap keywords journal,$(eval $(call 
 prepare-autobuild: $(OUTPUT)
 	@$(call I, 7, ===, preparing autobuild)
 	@cd $(OUTPUT) && if $(GIT) fetch --quiet --depth=1 origin $(BRANCH); then \
-		$(GIT) checkout --quiet $(BRANCH) && \
+		$(GIT) checkout --quiet -f $(BRANCH) && \
 		$(GIT) branch --quiet -D autobuild 2>/dev/null; \
 		$(GIT) checkout --quiet -f --orphan autobuild FETCH_HEAD; \
 	else \

@@ -21,4 +21,5 @@ short: Pj04
 * print media에서 short url로 스타일링되게 (이럴려면 postprocess할 때 원 short url을 남겨야 함. 좀 고쳐야)
 * 메타데이터 날짜 자동 파싱 (현재는 verbatim)
 * 사이트맵 커질 경우를 대비해서 grouping...
+* "여전히" incremental autobuild가 제대로 안 되는 느낌
 
