@@ -1,0 +1,69 @@
+<!doctype html>
+<!--[if gt IE 8]>--><html lang="ko"><!--<![endif]--><!--[if lte IE 8]><html lang="ko" class="mearie-ancient"><![endif]-->
+<head>
+<meta charset="utf-8">
+<title>주민등록번호 | 메아리</title>
+<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="canonical" href="/w/주민등록번호.ko" />
+<link rel="shortlink" href="/krrn" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
+<!--[if gt IE 6]><![IGNORE[-->
+<script src="/res/mearie.js"></script>
+<link rel="stylesheet" href="/res/main.css" />
+<!--<![endif]-->
+</head>
+<body>
+<header>
+<div id="mearie-logo">
+<a href="/index.ko" rel="home">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 182 186">
+<path d="M0 0h54v102h-35v52h35v32h-54m34-70h20v24h-20" />
+<path d="M64 0h54v100a22 22 0 0 0 0 56v30h-54m54-72a12 12 0 0 0 0 28v-28" />
+<path d="M128 0h54v102h-33v12h33v8h-33v32h33v32h-54m35-52h19v8h-19" />
+</svg>
+ 메아리</a>
+</div>
+<h1><span class="parent"><a href="/w/index.ko">낱말들</a><br /></span>주민등록번호</h1>
+</header>
+<main role="main">
+<p><a title="→ 대한민국" data-dead-href="/w/%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD.ko" class="keyword dead">대한민국</a>의 모든 주민들에게 발급되는 <a title="→ 식별번호" data-dead-href="/w/%EC%8B%9D%EB%B3%84%EB%B2%88%ED%98%B8.ko" class="keyword dead">식별번호</a>. 거의 모든 행정 및 금융 업무에 필요한 데다가 <a href="/w/%EC%9D%B8%ED%84%B0%EB%84%B7.ko" title="→ 인터넷" class="keyword">인터넷</a> 상에서 (보통 <a title="→ 중복가입" data-dead-href="/w/%EC%A4%91%EB%B3%B5%EA%B0%80%EC%9E%85.ko" class="keyword dead">중복가입</a>을 막기 위해) 주민등록번호를 요구하는 사례까지 많아서 <a title="→ 개인정보도용" data-dead-href="/w/%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4%EB%8F%84%EC%9A%A9.ko" class="keyword dead">개인정보 도용</a>의 대표적인 케이스로 꼽힌다.</p>
+<p>동일한 체계를 쓰는 <a href="/w/%EC%99%B8%EA%B5%AD%EC%9D%B8%EB%93%B1%EB%A1%9D%EB%B2%88%ED%98%B8.ko" title="→ 외국인등록번호" class="keyword">외국인등록번호</a>, <a href="/w/%EC%95%84%EC%9D%B4%ED%95%80.ko" title="→ 아이핀" class="keyword">아이핀</a>은 주민등록번호와 겹치지 않도록 설계되어 있다.</p>
+<a name="more"><!-- more --></a>
+<h2><span class="header-section-number">1</span> 규칙</h2>
+<p>주민등록번호는 13자리 숫자 <code>yymmdd-gaaaanp</code>로 다음과 같은 정보를 인코딩한다.</p>
+<ul>
+<li><code>yy</code>: (<a title="→ 호적" data-dead-href="/w/%ED%98%B8%EC%A0%81.ko" class="keyword dead">호적</a>상의) 세기를 제외한 생년</li>
+<li><code>mm</code>: 생월 (<code>01</code>~<code>12</code>; <code>13</code> 이상은 <a href="/w/%EC%95%84%EC%9D%B4%ED%95%80.ko" title="→ 아이핀" class="keyword">아이핀</a> 참고)</li>
+<li><code>dd</code>: 생일 (<code>01</code>~<code>31</code>)</li>
+<li><code>g</code>: <a title="→ 성별" data-dead-href="/w/%EC%84%B1%EB%B3%84.ko" class="keyword dead">성별</a>, 생년의 세기 부분, 내국인·외국인 여부
+<ul>
+<li><code>1</code>/<code>2</code>: 1900~1999년 사이에 탄생한 내국인</li>
+<li><code>3</code>/<code>4</code>: 2000~2099년 사이에 탄생한 내국인</li>
+<li><code>5</code>/<code>6</code>: 1900~1999년 사이에 탄생한 외국인 (<a href="/w/%EC%99%B8%EA%B5%AD%EC%9D%B8%EB%93%B1%EB%A1%9D%EB%B2%88%ED%98%B8.ko" title="→ 외국인등록번호" class="keyword">외국인등록번호</a> 참고)</li>
+<li><code>7</code>/<code>8</code>: 2000~2099년 사이에 탄생한 외국인</li>
+<li><code>9</code>/<code>0</code>: 1800~1899년 사이에 탄생한 내국인 (하지만 실제로는 <code>1</code>/<code>2</code>로 인코딩하는 사례도 적지 않다)</li>
+</ul></li>
+<li><code>aaaa</code>: 출생시 호적이 등록된 기초단위 사무소의 고유 코드<a id="fnref1" class="footnote" href="#fn1"><sup><span>[</span>1<span>]</span></sup></a></li>
+<li><code>n</code>: 앞자리가 모두 동일할 경우 <code>1</code>부터 순차적으로 부여</li>
+<li><code>p</code>: <a title="→ 체크숫자" data-dead-href="/w/%EC%B2%B4%ED%81%AC%EC%88%AB%EC%9E%90.ko" class="keyword dead">체크숫자</a> (가중치를 <code>234567-8923451</code>로 줘서 그 합이 11의 배수가 되도록 계산한 패리티를 10으로 나눈 나머지)</li>
+</ul>
+<p>따라서 주민등록번호를 알면 생년월일, 성별, 내국인·외국인 여부, 대략적인 출생지를 알 수 있고, 체크 숫자의 특성상 한 자리를 틀렸거나 인접한 두 자리를 바꿔 썼을 경우 거의 모두 잡아 낼 수 있다.<a id="fnref2" class="footnote" href="#fn2"><sup><span>[</span>2<span>]</span></sup></a> 물론 <a title="→ 주민등록번호생성기" data-dead-href="/w/%EC%A3%BC%EB%AF%BC%EB%93%B1%EB%A1%9D%EB%B2%88%ED%98%B8%EC%83%9D%EC%84%B1%EA%B8%B0.ko" class="keyword dead">주민등록번호 생성기</a>가 있으면 지역 코드를 제외한 모든 코드를 맞추는 게 가능하지만 요즘은 <a title="→ 실명인증" data-dead-href="/w/%EC%8B%A4%EB%AA%85%EC%9D%B8%EC%A6%9D.ko" class="keyword dead">실명인증</a>을 많이 하므로 이제 큰 소용은 없다. 물론 그렇다고 개인정보 도용이 줄어드는 건 아니다.</p>
+<h2><span class="header-section-number">2</span> 털린 사례</h2>
+<p>선술했듯 주민등록번호는 정부 및 민간에서 둘 다 많이 사용하는 식별 번호라는 점에서 다른 나라의 비슷한 체계와는 크게 다르다(대부분 식별 번호가 한 종류여도 민간에서 사용하지 못 하게 하거나, 목적에 따라 식별 번호가 여럿으로 갈린다). 덕택에 주민등록번호가 한 번 털리면 정부 및 민간의 모든 서비스에 영향을 받는데, 문제는 주민등록번호가 너무 많이 노출된 끝에 <strong>사실상 전 국민의 주민등록번호가 노출된 상태</strong>라는 점이다. 여기에는 다음 두 사건의 역할이 컸다:</p>
+<ul>
+<li><a title="→ 2008-02" data-dead-href="/w/2008-02.ko" class="keyword dead">2008-02</a>: <a title="→ 옥션" data-dead-href="/w/%EC%98%A5%EC%85%98.ko" class="keyword dead">옥션</a>에서 주민등록번호를 포함해 당시 전체 회원인 1863만여 명의 개인 정보가 유출되었다. 이 사건을 계기로 <a href="/w/%EC%95%84%EC%9D%B4%ED%95%80.ko" title="→ 아이핀" class="keyword">아이핀</a>이 등장했으나 <a title="→ 현실은시궁창" data-dead-href="/w/%ED%98%84%EC%8B%A4%EC%9D%80%EC%8B%9C%EA%B6%81%EC%B0%BD.ko" class="keyword dead">현실은 시궁창</a>.</li>
+<li><a title="→ 2011" data-dead-href="/w/2011.ko" class="keyword dead">2011</a>-<a title="→ 07-26" data-dead-href="/w/07-26.ko" class="keyword dead">07-26</a>: <a title="→ 네이트" data-dead-href="/w/%EB%84%A4%EC%9D%B4%ED%8A%B8.ko" class="keyword dead">네이트</a>에서 암호화된 주민등록번호를 포함해 당시 전체 회원인 3500만여 명의 개인 정보가 유출되었다. 주민등록번호는 이후에 암호화가 뚫린 것으로 판단되었다.</li>
+</ul>
+<p>비교를 위하여 현재 <a title="→ 대한민국" data-dead-href="/w/%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD.ko" class="keyword dead">대한민국</a>의 총 인구는 5051만여 명(2011년 추산)이다. 옥션과 네이트의 회원이 얼마나 겹치는 지는 알 수 없지만, 적어도 <strong>네이트 사건 한 번만으로 전 국민 70%의 주민등록번호가 노출되었다</strong>는 얘기다! 실제로 네이트 사건과 관련된 재판 과정에서 처음에 배당된 재판부의 담당판사가 피해 당사자라 사건 심리가 부적합하다는 이유로 재판부를 새로 찾는 촌극이 일어나기도 했다.<a id="fnref3" class="footnote" href="#fn3"><sup><span>[</span>3<span>]</span></sup></a> <a title="→ 진보넷" data-dead-href="/w/%EC%A7%84%EB%B3%B4%EB%84%B7.ko" class="keyword dead">진보넷</a>에서는 이 참에 <a href="http://act.jinbo.net/drupal/node/6487">주민등록번호 재발급 운동</a>까지 하고 있다.</p>
+<section class="footnotes"><hr />
+<section id="fn1"><h6>1</h6><p>이 부분은 기본적으로 국가 기밀 사항이지만 일부 대응이 알려져 있다. 이를테면 경기도 안성은 <code>25xx</code>라서 안성에 위치한 <a title="→ 하나원" data-dead-href="/w/%ED%95%98%EB%82%98%EC%9B%90.ko" class="keyword dead">하나원</a> 출신 <a title="→ 탈북자" data-dead-href="/w/%ED%83%88%EB%B6%81%EC%9E%90.ko" class="keyword dead">탈북자</a>들이 모조리 이 코드를 발급받아 <a href="http://news.sbs.co.kr/section_news/news_read.jsp?news_id=N1000282238">문제</a>가 생겼다거나 뭐 그런 것. 종종 이 코드 목록이 사무소 별로 갱신이 안 되어서 중복으로 코드가 부여되는 경우도 생긴다. <a href="#fnref1" class="footnote-back">▲</a></p></section>
+<section id="fn2"><h6>2</h6><p>전자는 98%, 후자는 89% 정도의 확률로 잡을 수 있다. 100%가 아닌 이유는 후자의 확률을 높이기 위해 나눔수를 10보다 큰 <a title="→ 소수" data-dead-href="/w/%EC%86%8C%EC%88%98.ko" class="keyword dead">소수</a>로 정해서 전자에서 겹치는 경우가 생겨서 그런 것. 똑같이 11의 나머지를 쓰는 <a title="→ isbn" data-dead-href="/w/isbn.ko" class="keyword dead">ISBN</a>-10은 맨 마지막 자리에만 <code>X</code>를 허용해서 이 문제를 회피했다. <a href="#fnref2" class="footnote-back">▲</a></p></section>
+<section id="fn3"><h6>3</h6><p><a href="http://news.naver.com/main/read.nhn?oid=008&amp;aid=0002586411">네이트 해킹피해 첫 소송… 집단소송 불당기나</a> (<a title="→ 머니투데이" data-dead-href="/w/%EB%A8%B8%EB%8B%88%ED%88%AC%EB%8D%B0%EC%9D%B4.ko" class="keyword dead">머니투데이</a>, 2011-08-04) <a href="#fnref3" class="footnote-back">▲</a></p></section>
+</section>
+</main>
+<footer>
+<p id="mearie-meta"><code><i class="mearie-logo"></i>/krrn</code> | 마지막 수정 <time>2016-05-29T19:22:13+0000</time> (<code>12e94c38778d</code>)</p>
+<address>저작권자 &copy; 1999&ndash;2016, 강 성훈. <a href="/about/copyright.ko" rel="copyright">저작권을 약간 가집니다.</a></address>
+</footer>
+</body>
+</html>

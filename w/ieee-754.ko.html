@@ -1,0 +1,301 @@
+<!doctype html>
+<!--[if gt IE 8]>--><html lang="ko"><!--<![endif]--><!--[if lte IE 8]><html lang="ko" class="mearie-ancient"><![endif]-->
+<head>
+<meta charset="utf-8">
+<title>IEEE 754 | 메아리</title>
+<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="canonical" href="/w/ieee-754.ko" />
+<link rel="shortlink" href="/754" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
+<!--[if gt IE 6]><![IGNORE[-->
+<script src="/res/mearie.js"></script>
+<link rel="stylesheet" href="/res/main.css" />
+<!--<![endif]-->
+</head>
+<body>
+<header>
+<div id="mearie-logo">
+<a href="/index.ko" rel="home">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 182 186">
+<path d="M0 0h54v102h-35v52h35v32h-54m34-70h20v24h-20" />
+<path d="M64 0h54v100a22 22 0 0 0 0 56v30h-54m54-72a12 12 0 0 0 0 28v-28" />
+<path d="M128 0h54v102h-33v12h33v8h-33v32h33v32h-54m35-52h19v8h-19" />
+</svg>
+ 메아리</a>
+</div>
+<h1><span class="parent"><a href="/w/index.ko">낱말들</a><br /></span>IEEE 754</h1>
+</header>
+<main role="main">
+<p><a title="→ 부동소숫점" data-dead-href="/w/%EB%B6%80%EB%8F%99%EC%86%8C%EC%88%AB%EC%A0%90.ko" class="keyword dead">부동 소숫점</a> <a title="→ 실수" data-dead-href="/w/%EC%8B%A4%EC%88%98.ko" class="keyword dead">실수</a>를 표현하는 방법과 적용할 수 있는 연산들을 정의하는 <a title="→ ieee-표준" data-dead-href="/w/ieee-%ED%91%9C%EC%A4%80.ko" class="keyword dead">IEEE 표준</a>. 최신판은 <a title="→ 2008년" data-dead-href="/w/2008%EB%85%84.ko" class="keyword dead">2008년</a>에 나온 IEEE 754-2008(= <a title="→ iso-iec-ieee" data-dead-href="/w/iso-iec-ieee.ko" class="keyword dead">ISO/IEC IEEE</a> 60559:2011)이지만, 그 이전판인 IEEE 754-1985와 비교해서 달라진 점은 없고 몇 가지 포맷 및 연산이 새로 추가되었을 뿐이다. 또한 기존에는 <a href="/w/%EC%9D%B4%EC%A7%84%EB%B2%95.ko" title="→ 이진법" class="keyword">이진법</a> 부동소숫점을 정의하는 IEEE 754(-1985)와 <a title="→ 십진법" data-dead-href="/w/%EC%8B%AD%EC%A7%84%EB%B2%95.ko" class="keyword dead">십진법</a> 부동소숫점을 정의하는 IEEE 854-1987이 공존했으나, 2008년 표준은 이진법과 십진법을 함께 포함하고 있다.</p>
+<p>명실상부하게 <a href="/w/%EC%9C%A0%EB%8B%88%EC%BD%94%EB%93%9C.ko" title="→ 유니코드" class="keyword">유니코드</a>와 더불어 <a title="→ 프로그래머" data-dead-href="/w/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8.ko" class="keyword dead">프로그래머</a>가 반드시 알아야 할 표준 중 하나이다. 다른 말로 하면, IEEE 754는 실수 표현이 필요한 거의 모든 곳에서 공통적으로 쓰이고 있으며, 아무 지식 없이 직관적으로 쓰려다 피를 보는 경우도 엄청나게 많다는 얘기다. 이 쪽 관련해서는 <a title="→ 부동소숫점" data-dead-href="/w/%EB%B6%80%EB%8F%99%EC%86%8C%EC%88%AB%EC%A0%90.ko" class="keyword dead">부동 소숫점</a> 문서를 참고하는 게 더 나을 것이다. 시간이 나면 맨 아래에 있는 바깥 링크에 있는 문서들도 읽어 보자.</p>
+<a name="more"><!-- more --></a>
+<h2><span class="header-section-number">1</span> 포맷</h2>
+<p>IEEE 754에서 정의하는 부동소숫점 실수 포맷은 크게 다음과 같은 변수로 일반화할 수 있다:</p>
+<ul>
+<li>밑수 <em>b</em></li>
+<li>지수부의 범위 <em>e</em><sub>min</sub>, <em>e</em><sub>max</sub></li>
+<li>가수부(mantissa)를 <em>b</em>진법으로 표현했을 때 표현되는 자릿수 <em>n</em></li>
+<li>가수부의 <a href="#normalization">정규화</a> 강제 여부를 나타내는 숫자 <em>R</em> (0 또는 1)</li>
+</ul>
+<p>이제 모든 부동소숫점 소수는 부호 <em>s</em>, 지수부 <em>e</em>, 가수부 <em>m</em>의 <a title="→ 순서쌍" data-dead-href="/w/%EC%88%9C%EC%84%9C%EC%8C%8D.ko" class="keyword dead">순서쌍</a> (<em>s</em>, <em>e</em>, <em>m</em>)으로 표현할 수 있으며, 그 의미는 다음과 같이 결정된다.</p>
+<table>
+<tr class="header">
+<th align="center"><em>s</em></th>
+<th align="center"><em>e</em></th>
+<th align="center"><em>m</em></th>
+<th align="left">실수값</th>
+</tr>
+<tr class="odd">
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="left"><a title="→ 마이너스0" data-dead-href="/w/%EB%A7%88%EC%9D%B4%EB%84%88%EC%8A%A40.ko" class="keyword dead">-0</a></td>
+</tr>
+<tr class="odd">
+<td align="center">0/1</td>
+<td align="center">0</td>
+<td align="center">(0, 1)</td>
+<td align="left">(-1)<sup><em>s</em></sup> × <em>b</em><sup><em>e</em><sub>min</sub></sup> × <em>m</em></td>
+</tr>
+<tr class="even">
+<td align="center">0/1</td>
+<td align="center">[1, <em>e</em><sub>max</sub> - <em>e</em><sub>min</sub>]</td>
+<td align="center">[0, 1)</td>
+<td align="left">(-1)<sup><em>s</em></sup> × <em>b</em><sup><em>e</em> + <em>e</em><sub>min</sub></sup> × (<em>R</em> + <em>m</em>) ÷ (<em>R</em> + 1)<a id="fnref1" class="footnote" href="#fn1"><sup><span>[</span>1<span>]</span></sup></a></td>
+</tr>
+<tr class="odd">
+<td align="center">0/1</td>
+<td align="center"><em>e</em><sub>max</sub> - <em>e</em><sub>min</sub> + 1</td>
+<td align="center">0</td>
+<td align="left">(-1)<sup><em>s</em></sup> × <a title="→ 무한대" data-dead-href="/w/%EB%AC%B4%ED%95%9C%EB%8C%80.ko" class="keyword dead">∞</a>; 다만, 반올림의 목적으로는 (-1)<sup><em>s</em></sup> × <em>b</em><sup><em>e</em><sub>max</sub></sup></td>
+</tr>
+<tr class="even">
+<td align="center">0/1</td>
+<td align="center"><em>e</em><sub>max</sub> - <em>e</em><sub>min</sub> + 1</td>
+<td align="center">[0, ½)</td>
+<td align="left">조용한(quiet) <a title="→ nan" data-dead-href="/w/nan.ko" class="keyword dead">NaN</a></td>
+</tr>
+<tr class="odd">
+<td align="center">0/1</td>
+<td align="center"><em>e</em><sub>max</sub> - <em>e</em><sub>min</sub> + 1</td>
+<td align="center">[½, 1)</td>
+<td align="left">시끄러운(signaling) NaN</td>
+</tr>
+</table>
+<p>눈치채기 어렵지 않지만 모든 실수는 (-1)<sup><em>s</em></sup> × <em>b</em><sup><em>e’</em></sup> × <em>f</em>의 형태(거의 대부분의 경우 ½ ≤ <em>f</em> &lt; 1)로 저장되며, 좀 복잡해 보이는 위의 규칙들은 지수부 <em>e’</em>와 가수부 <em>f</em>를 어떻게 최적으로 부호화하느냐에 대한 결과인 것이다. (다만, 편의상 아래에서는 실제 저장되는 가수부 <em>m</em> 대신 <em>f</em>를 직접 사용하는 경우가 많다.)</p>
+<p>구체적인 예를 들어 보자. <em>b</em> = 2, <em>R</em> = 1, <em>e</em><sub>min</sub> = -14, <em>e</em><sub>max</sub> = 15, <em>n</em> = 10인 부동소숫점 표현을 생각하면, 0.1은 다음과 같이 표현할 수 있으며:</p>
+<p><span class="math math-display">(-1)^0 \times 2^0 \times 0.0001\;1001\;1001\;1001\;1001\cdots_{(2)}</span></p>
+<p>이는 다음과 같으므로:</p>
+<p><span class="math math-display">(-1)^{\underline{0}} \times 2^{\underline{11}+(-14)} \times 0.1\;\underline{1001\;1001\;10}01\;1001\cdots_{(2)}</span></p>
+<p>여기서 가수부(<em>f</em>)의 첫 1비트는 정규화로 인해 암시적으로 표현된다. 따라서 결과적으로는 부호 <em>s</em> = 0, 지수부 <em>e</em> = 11 = 01011<sub>(2)</sub>, 가수부 <em>m</em> = 0.1001100110<sub>(2)</sub> = 0.599609375으로 표현되며, 대응되는 비트 표현은 <code>0 01011 1001100110</code>가 된다. 이는 실제로 <a title="→ binary16" data-dead-href="/w/binary16.ko" class="keyword dead">binary16</a> 포맷에서 0.1을 표현하는 방법이다.</p>
+<h2 id="normalization" class="header-has-selflink"><span class="header-section-number">2</span> 정규화 <a href="#normalization" class="header-selflink">#</a></h2>
+<p>비단 IEEE 754 뿐만 아니라 부동소숫점 표현의 중요한 특징 중 하나는 <strong>정규화</strong>(normalization)로, 연산이 끝난 결과를 가수부가 특정 범위 안으로 들어 오도록 지수부를 조정하는 과정이다. 예를 들어서 이진법을 가정할 때, 0.3 = 0.6 × 2<sup>-1</sup>과 0.8 = 0.8 × 2<sup>0</sup>의 합을 계산하는 과정은 다음과 같이 이루어진다.</p>
+<ol>
+<li>두 숫자를 더 낮은 지수부에 맞게 조정한다: (0.6 × 2<sup>-1</sup>) + (1.6 × 2<sup>-1</sup>)</li>
+<li>가수부를 더한다: 2.2 × 2<sup>-1</sup></li>
+<li>가수부가 범위 안에 들어 오도록 지수부를 바꾼다: 0.55 × 2<sup>1</sup></li>
+</ol>
+<p>물론 실제 하드웨어 구현에서는 지수부 차이가 너무 많이 날 경우 가수부를 볼 필요가 없게 하는 등의 최적화가 들어가 있다. 부동소숫점 연산은 그래서 일반적인 정수 연산과는 달리 수행 시간을 전혀 종잡을 수 없는 경우가 대부분이다.</p>
+<p>정규화와 함께 수반되는 것은 <strong>반올림 모드</strong>(rounding mode)로, 정규화 뒤에 가수부의 일부 끝자리가 잘려나갈 경우 어떻게 처리할 것인지를 나타낸다. 이 “처리”라 함은 단순히 자리를 자르거나 올리는 거 말고도, 결과가 원래 이상적인(가수부가 무한히 긴) 결과와 다를 때 오류를 내는지의 여부라거나, 애초에 이상적인 결과가 불가능할 때의 동작이라거나, 결과가 유한한 부동소숫점 값으로 나타낼 수 없을 때의 동작 따위를 모두 포함한다. IEEE 754-2008에서는 다섯 종류의 반올림 모드를 지원한다(4.3장):</p>
+<dl>
+<dt>짝수로 반올림 (round to nearest, ties to even)</dt>
+<dd>가장 가까운 표현 가능한 숫자로 반올림하되, 원래 값이 가능한 숫자 두 개의 중간에 걸쳐 있으면 둘 중 가수부의 마지막 자리가 짝수인 값으로 반올림한다. 이 방법은 “은행원의 반올림”이라고도 불리며, 반올림으로 인한 오류의 <a title="→ 기대값" data-dead-href="/w/%EA%B8%B0%EB%8C%80%EA%B0%92.ko" class="keyword dead">기대값</a>을 0으로 하는 효과가 있다.</dd>
+<dt>큰 절대값으로 반올림 (round to nearest, ties away from zero)</dt>
+<dd>앞과 같은데, 중간에 걸쳐 있을 경우 두 값 중 절대값이 큰 값으로 반올림한다.</dd>
+<dt>올림 (round toward +∞)</dt>
+<dd>원래 값보다 크거나 같은 가장 작은 표현 가능한 숫자를 선택한다.</dd>
+<dt>버림 (round toward -∞)</dt>
+<dd>원래 값보다 작거나 같은 가장 큰 표현 가능한 숫자를 선택한다.</dd>
+<dt>절삭 (round toward zero)</dt>
+<dd>원래 값보다 절대값이 작거나 같은, 절대값이 가장 큰 표현 가능한 숫자를 선택한다.</dd>
+</dl>
+<p>기본값은 “짝수로 반올림”이다. 모든 연산은 연산 후 저장 직전까지는 무한히 정확한 값으로 표현된다고 가정하는데, <a title="→ 단일곱셈누산" data-dead-href="/w/%EB%8B%A8%EC%9D%BC%EA%B3%B1%EC%85%88%EB%88%84%EC%82%B0.ko" class="keyword dead">단일 곱셈 누산</a>(fused multiply-add, FMA) 같이 여러 연산이 하나로 합쳐져 있는 경우에도 마찬가지로 모든 연산이 끝난 다음에야 반올림이 처리된다. (애초에 FMA가 곱셈 후 덧셈을 할 때 정밀도를 향상시키기 위해 존재하는 연산이다.)</p>
+<h3 id="subnormalization" class="header-has-selflink"><span class="header-section-number">2.1</span> 준정규화 <a href="#subnormalization" class="header-selflink">#</a></h3>
+<p>IEEE 754가 기존의 부동소숫점 구현들과 가장 크게 차이나는 부분은, 절대값이 매우 작은 숫자를 일반적인 정규 표현에 맞지 않는 표현으로 나타내도록 하는 <strong>준정규화</strong>(subnormalization)이다. IEEE 754-2008 이전에는 비정규화(denormalization)라고도 했는데, 엄밀히 말하면 정규화를 하기는 하는데 덜 정밀하게 표현하는 것에 불과하므로 정확한 용어라고는 할 수 없다.</p>
+<p>보통과 같이 모든 숫자가 정규화된 체계에서는 두 가지 귀찮은 점이 존재한다. 한 가지는 가수부가 [½, 1)의 범위로 제한되어 있어서 0을 예외 없이 나타내기 어렵다는 것이며, 다른 한 가지는 서로 다른 유한한 실수의 차이가 0이 되는 경우가 존재할 수 있다는 점이다. (고로 a = b와 a - b = 0이 동치가 되지 않는다.) 후자는 특히 <a title="→ 0으로나누기" data-dead-href="/w/0%EC%9C%BC%EB%A1%9C%EB%82%98%EB%88%84%EA%B8%B0.ko" class="keyword dead">0으로 나누기</a>를 유발할 가능성이 있어서 문제가 되었는데, 예를 들어서 나타낼 수 있는 가장 작은 양의 실수가 2<sup>-1022</sup> × 0.5인 경우를 가정하자. 이제 2<sup>-1022</sup> × 0.6과 2<sup>-1022</sup> × 0.7의 차이는 정규화하면 2<sup>-1022</sup> × 0.1 = 2<sup>-1025</sup> × 0.8이지만, 이는 표현할 수 없으므로 반올림을 쓸 경우 0으로 절삭되어 버린다!</p>
+<p>준정규화는 이런 문제를 해결하기 위해 특정 절대값 이하로는 지수부를 고정시킨다. 따라서 이렇게 표현된 준정규화된 숫자(subnormal number)는 가수부가 [½, 1)이 아닌 [0, 1)의 범위가 되며, 0은 준정규화된 가장 작은 숫자로 표현 가능하다. 그리고 준정규화된 숫자들 사이의 숫자 간격(<a title="→ ulp" data-dead-href="/w/ulp.ko" class="keyword dead">ulp</a>)은 일정하기 때문에, 모든 유한한 실수의 숫자 간격 또한 준정규화된 양의 숫자로 표현할 수 있게 된다. 앞의 예제를 끝마치자면, 두 작은 숫자의 차이 2<sup>-1022</sup> × 0.1은 준정규화되어 지수부가 안 바뀔테니 0으로 절삭되지 않을 것이다.</p>
+<p>표준화 과정에서는 “점진적인 <a title="→ 언더플로" data-dead-href="/w/%EC%96%B8%EB%8D%94%ED%94%8C%EB%A1%9C.ko" class="keyword dead">언더플로</a>”(gradual underflow)라고 불리기도 했으며, 채택된 제안들 중에서 논란이 가장 크게 일었던 기능이기도 하다. 그도 그럴 것이 준정규화를 구현해서 준정규화된 숫자에 대해서만 느려지면 상관이 없는데, 정규화된 숫자의 경우에도 느려지지 않게 할 방법이 잘 보이지 않았던 것이다. 거기에 <a title="→ dec" data-dead-href="/w/dec.ko" class="keyword dead">DEC</a>가 <a title="→ vax" data-dead-href="/w/vax.ko" class="keyword dead">VAX</a>에서 쓰던 자기 포맷을 관철시키려고 준정규화를 반대하는 상황까지 겹쳐서 결정은 쉽지 않은 일이었다. 하지만 정규화된 숫자의 연산에 영향을 주지 않게 하는 기법이 속속 발견되고, 여러 전문가들(여기에는 <a title="→ donald-knuth" data-dead-href="/w/donald-knuth.ko" class="keyword dead">Donald Knuth</a>도 있었다)이 찬성표를 던졌으며, 심지어 <strong>DEC가 준정규화 반대를 위해 검토를 요청한 전문가조차 찬성표를 던지자 <s><a title="→ 팀킬" data-dead-href="/w/%ED%8C%80%ED%82%AC.ko" class="keyword dead">팀킬</a></s></strong> 상황은 크게 반전되어 버렸다. 한 술 더 떠서 <a title="→ 인텔8087" data-dead-href="/w/%EC%9D%B8%ED%85%948087.ko" class="keyword dead">인텔 8087</a>은 IEEE 754 표준화 도중에 출시되었으며 준정규화를 지원했는데, 이는 IEEE 754 표준이 검증되지 않은 설계에 불과하다는 주장을 깔끔하게 정리하는 실용적인 구현체였다.<a id="fnref2" class="footnote" href="#fn2"><sup><span>[</span>2<span>]</span></sup></a></p>
+<h3 id="specials" class="header-has-selflink"><span class="header-section-number">2.2</span> 형언하기 어려운 숫자가 아닌 무언가 <a href="#specials" class="header-selflink">#</a></h3>
+<p>IEEE 754 표준에는 유한한 숫자 말고도 몇 가지 특수한 값들이 존재한다. 이들은 연산들의 결과가 실수가 아니라거나, 실수이긴 한데 표현 가능하지 않은 경우에 등장하며, 결과를 일일이 확인하지 않아도 일단은 연산을 거친 뒤에 뭔가 이해할 수 있는 결과가 나오도록 정의되어 있다.</p>
+<p>첫번째는 <strong><a title="→ 무한대" data-dead-href="/w/%EB%AC%B4%ED%95%9C%EB%8C%80.ko" class="keyword dead">무한대</a></strong>(+∞/-∞)로, 이상적인 계산 결과의 절대값이 표현 가능한 결과를 벗어나는 경우에 등장한다. 예를 들어서 반올림 모드가 “올림”인데 원래 결과가 표현 가능한 가장 큰 유한한 실수보다 크면 그 결과는 +∞가 된다. 또한 반올림 모드가 “짝수로 반올림”이거나 “큰 절대값으로 반올림”일 경우에도 무한대가 없었을 때 무한대에 대응되는 비트 표현의 실수값을 기준으로 반올림이 일어난다. 예를 들어 <em>b</em> = 2, <em>e</em><sub>max</sub> = 1023인 경우를 생각하면, 표현 가능한 가장 큰 유한한 실수는 2<sup>1023</sup>보다 살짝 작은데 이 때 +∞를 2<sup>1023</sup>처럼 생각하고 반올림을 수행한다는 얘기가 된다. <s>무한대와 유한한 숫자의 차이가 무한대라고 반올림이 안 되는 건 아니다.</s></p>
+<p>두번째는 <strong>조용한 <a title="→ nan" data-dead-href="/w/nan.ko" class="keyword dead">NaN</a></strong>(quiet NaN, qNaN)으로, NaN은 “not a number”, 즉 숫자가 아님<s>안숫자</s>을 나타낸다. qNaN은 예를 들어서 <a title="→ 음수" data-dead-href="/w/%EC%9D%8C%EC%88%98.ko" class="keyword dead">음수</a>의 <a title="→ 제곱근" data-dead-href="/w/%EC%A0%9C%EA%B3%B1%EA%B7%BC.ko" class="keyword dead">제곱근</a>같이 실수가 아닌 결과나, ±∞ × 0 같이 결과가 정의되어 있지 않은 경우에 발생한다. qNaN은 기본적으로는 별도의 오류를 발생시키지 않으며, 따라서 qNaN + 3 같이 연산의 피연산자가 qNaN일 때의 결과는 항상 qNaN이다. (다만 일부 연산은 NaN 자체를 입력으로 받지 않는 경우가 있는데, 이 경우에는 오류가 난다.) 또한 중요한 특징으로 NaN이 임의의 추가 정보를 가수부에 들고 있을 수 있다는 점이 있는데(이 추가 정보를 payload라고 부른다), 그래서 피연산자가 qNaN이라서 결과가 qNaN인 경우 <strong>추가 정보가 보존되어야 한다</strong>! (다만 피연산자가 둘 이상 qNaN일 경우 둘 중 뭘 선택하느냐는 구현체 마음.) 따라서 연산 도중에 오류로 NaN이 발생했을 때 당장 확인하지 않아도 나중에 결과가 NaN일 때 추가 정보를 확인하면 한 가지 오류는 확인할 수 있다.<a id="fnref3" class="footnote" href="#fn3"><sup><span>[</span>3<span>]</span></sup></a> 이렇게 쓰고 보니 무한대랑 비슷해 보이는데, 사실은 무한대 자체가 가수부가 0인 qNaN와 동일한 표현을 사용하며 연산에서의 결과만 살짝 다를 뿐이다.</p>
+<p>세번째는 <strong>시끄러운 NaN</strong>(signaling NaN, sNaN)이다. qNaN과는 달리 sNaN은 피연산자로 들어가는 순간 바로 오류를 발생시킨다. 표준 연산들에서는 반환값으로 sNaN을 주는 경우가 없기 때문에, qNaN은 당장 확인하지 않아도 좋은 오류를 나타내는데, 그리고 sNaN은 당장 확인해야 하는 오류를 나타내는데 쓰는 게 편리하다.</p>
+<p>엄밀하게 말하면 유한한 숫자이긴 하지만, <a title="→ 마이너스0" data-dead-href="/w/%EB%A7%88%EC%9D%B4%EB%84%88%EC%8A%A40.ko" class="keyword dead">-0</a>도 특수한 숫자이기는 매한가지이다. 이 값은 부동소숫점 표현은 어쩔 수 없이 <a title="→ 부호와절대값표현" data-dead-href="/w/%EB%B6%80%ED%98%B8%EC%99%80%EC%A0%88%EB%8C%80%EA%B0%92%ED%91%9C%ED%98%84.ko" class="keyword dead">부호와 절대값 표현</a>을 써야 하기 때문에 나타나는 값이며, 거의 대부분의 경우에 +0과 동일하게 동작하지만 일부 연산에서 다르게 동작하며(예를 들어 3÷(-0) = -∞) 특정한 최적화가 -0 하나 때문에 안 되는 경우도 생긴다(예를 들어 -(x - y) ≠ y - x). 다만 IEEE 754에서 0이 거의 <a title="→ 무한소" data-dead-href="/w/%EB%AC%B4%ED%95%9C%EC%86%8C.ko" class="keyword dead">무한소</a> 취급받고 있다는 걸 생각하면 무한대가 두 짝이니 무한소가 두 짝 있다고 생각하는 것도 나쁘지는 않…을 듯?</p>
+<h3><span class="header-section-number">2.3</span> 목록</h3>
+<p>다음은 IEEE 754-2008이 정의하는 모든 포맷과 대응되는 파라미터의 목록이다.</p>
+<table>
+<tr class="header">
+<th align="left">이름</th>
+<th align="center">비트수</th>
+<th align="right"><em>b</em></th>
+<th align="center">[<em>e</em><sub>min</sub>, <em>e</em><sub>max</sub>]</th>
+<th align="right"><em>n</em></th>
+<th align="right"><em>R</em></th>
+<th align="right">자릿수<a id="fnref4" class="footnote" href="#fn4"><sup><span>[</span>4<span>]</span></sup></a></th>
+<th align="right">절대값 상한<a id="fnref5" class="footnote" href="#fn5"><sup><span>[</span>5<span>]</span></sup></a></th>
+</tr>
+<tr class="odd">
+<td align="left"><strong><a title="→ binary16" data-dead-href="/w/binary16.ko" class="keyword dead">binary16</a></strong> (반정도)</td>
+<td align="center">16 (1+5+10)</td>
+<td align="right">2</td>
+<td align="center">[-14, +15]</td>
+<td align="right">10</td>
+<td align="right">1</td>
+<td align="right">3.31</td>
+<td align="right">3.28×10<sup>4</sup></td>
+</tr>
+<tr class="even">
+<td align="left"><strong><a title="→ binary32" data-dead-href="/w/binary32.ko" class="keyword dead">binary32</a></strong> (단정도)</td>
+<td align="center">32 (1+8+23)</td>
+<td align="right">2</td>
+<td align="center">[-126, +127]</td>
+<td align="right">23</td>
+<td align="right">1</td>
+<td align="right">7.22</td>
+<td align="right">1.71×10<sup>38</sup></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong><a title="→ binary64" data-dead-href="/w/binary64.ko" class="keyword dead">binary64</a></strong> (배정도)</td>
+<td align="center">64 (1+11+52)</td>
+<td align="right">2</td>
+<td align="center">[-1022, +1023]</td>
+<td align="right">52</td>
+<td align="right">1</td>
+<td align="right">15.95</td>
+<td align="right">8.99×10<sup>307</sup></td>
+</tr>
+<tr class="even">
+<td align="left"><strong><a title="→ binary128" data-dead-href="/w/binary128.ko" class="keyword dead">binary128</a></strong> (사배정도)</td>
+<td align="center">128 (1+15+112)</td>
+<td align="right">2</td>
+<td align="center">[-16382, +16383]</td>
+<td align="right">112</td>
+<td align="right">1</td>
+<td align="right">34.01</td>
+<td align="right">5.95×10<sup>4931</sup></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong><a title="→ decimal32" data-dead-href="/w/decimal32.ko" class="keyword dead">decimal32</a></strong></td>
+<td align="center">32 (1+7+23+X)</td>
+<td align="right">10</td>
+<td align="center">[-95, +96]</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">7.00</td>
+<td align="right">1.00×10<sup>96</sup></td>
+</tr>
+<tr class="even">
+<td align="left"><strong><a title="→ decimal64" data-dead-href="/w/decimal64.ko" class="keyword dead">decimal64</a></strong></td>
+<td align="center">64 (1+9+53+X)</td>
+<td align="right">10</td>
+<td align="center">[-383, +384]</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">16.00</td>
+<td align="right">1.00×10<sup>384</sup></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong><a title="→ decimal128" data-dead-href="/w/decimal128.ko" class="keyword dead">decimal128</a></strong></td>
+<td align="center">128 (1+13+113+X)</td>
+<td align="right">10</td>
+<td align="center">[-6143, +6144]</td>
+<td align="right">34</td>
+<td align="right">0</td>
+<td align="right">34.00</td>
+<td align="right">1.00×10<sup>6144</sup></td>
+</tr>
+</table>
+<p>binary16과 십진법 포맷은 IEEE 754-2008에서 추가되었으며, 괄호 안에 있는 이름은 IEEE 754-1985에서의 명칭이다(다만 “반정도”는 통칭). binary16과 decimal32는 너무 작기 때문에 계산용으로 쓰이진 않고 저장용으로만 권장되고 있다. 비트 수에서 “X”로 표기된 것은 비트 패턴에 따라 지수부와 가수부에 함께 포함되는 비트를 나타낸다.</p>
+<p>IEEE 754는 또한 앞의 포맷들을 확장하는 확장된(extended)/확장 가능한(extendable) 포맷을 정의하고 있다. 둘의 차이는 순전히 사용자가 <em>n</em>과 <em>e</em><sub>min</sub>, <em>e</em><sub>max</sub>를 맘대로 지정할 수 있느냐 없느냐의 차이로, 표준은 앞의 세 파라미터에 한하여 기반 포맷보다 같거나 큰 값을 쓰는 전제 하에 확장을 허용한다. 실질적으로는, 다음 두 포맷이 현실적으로 가장 많이 쓰이는 확장 포맷이다:</p>
+<table>
+<tr class="header">
+<th align="left">이름</th>
+<th align="center">비트수</th>
+<th align="right"><em>b</em></th>
+<th align="center">[<em>e</em><sub>min</sub>, <em>e</em><sub>max</sub>]</th>
+<th align="right"><em>n</em></th>
+<th align="right"><em>R</em></th>
+<th align="right">자릿수</th>
+<th align="right">절대값 상한</th>
+</tr>
+<tr class="odd">
+<td align="left"><strong><a title="→ x86확장배정도" data-dead-href="/w/x86%ED%99%95%EC%9E%A5%EB%B0%B0%EC%A0%95%EB%8F%84.ko" class="keyword dead">x86 확장 배정도</a></strong></td>
+<td align="center">80 (1+15+64)</td>
+<td align="right">2</td>
+<td align="center">[-16382, +16383]</td>
+<td align="right">63</td>
+<td align="right">0</td>
+<td align="right">18.97</td>
+<td align="right">5.95×10<sup>4931</sup></td>
+</tr>
+<tr class="even">
+<td align="left"><strong><a title="→ double-double" data-dead-href="/w/double-double.ko" class="keyword dead">double-double</a></strong></td>
+<td align="center">128 (1+11+105)</td>
+<td align="right">2</td>
+<td align="center">[-1022, +1023]</td>
+<td align="right">105</td>
+<td align="right">1</td>
+<td align="right">31.91</td>
+<td align="right">8.99×10<sup>307</sup></td>
+</tr>
+</table>
+<h2><span class="header-section-number">3</span> 연산</h2>
+<p>흔히들 생각하는 것과 다르게 IEEE 754는 포맷 말고도 해당 포맷에 적용할 수 있는 다양한 연산들의 결과를 정의하고 있다. 여기에는 전혀 듣도 보도 못한 것이 포함되기도 하는데, 이 중에는 NaN의 처리 때문에 복잡해지는 것들도 있고:</p>
+<ul>
+<li>두 수의 최대값/최소값 연산은 둘 중 하나가 NaN이고 나머지 하나가 보통 숫자일 때 잘 정의되지 않는다. IEEE 754는 명시적으로 이 경우에 숫자를 반환하는 <code>minNum</code>/<code>maxNum</code> 계열의 함수를 정의한다. (NaN을 반환하는 쪽은 IEEE 754에는 없지만 일부 프로그래밍 언어가 제공하기도 한다.)</li>
+<li>NaN의 처리에 따라 두 숫자는 한 쪽이 작거나, 크거나, 같거나, 비교가 불가능할 수 있다. 그래서 이걸 토대로 비교 연산을 만들면 6개가 아니라 <strong>22개</strong>라는 말도 안 되는 갯수가 나온다. <a title="→ d-언어" data-dead-href="/w/d-%EC%96%B8%EC%96%B4.ko" class="keyword dead">D 언어</a>가 이 중 일부, 정확히는 14개를 구현하고 있는데, 이는 연산자에 “비교가 불가능한” 경우를 명시적으로 표시하지 않도록 부단한(…) 노력을 기울였기 때문이다.</li>
+<li>IEEE 754는 NaN 때문에 <a title="→ 완전순서" data-dead-href="/w/%EC%99%84%EC%A0%84%EC%88%9C%EC%84%9C.ko" class="keyword dead">완전 순서</a>가 되지 않는데, 이를 해결하기 위해 NaN에 임의의 순서를 매기는 <code>totalOrder</code> 함수가 정의되어 있다. 물론 이 함수 한정으로 -0 &lt; +0이다.</li>
+</ul>
+<p>자주 쓰이는 비표준 수학 함수가 명시적으로 정의되거나, 미묘하게 잘 정의되지 않은 수학 함수가 재정의되기도 하며:</p>
+<ul>
+<li><a title="→ 지수함수" data-dead-href="/w/%EC%A7%80%EC%88%98%ED%95%A8%EC%88%98.ko" class="keyword dead">지수 함수</a>와 <a title="→ 로그함수" data-dead-href="/w/%EB%A1%9C%EA%B7%B8%ED%95%A8%EC%88%98.ko" class="keyword dead">로그 함수</a>는 밑수가 <a title="→ 자연상수" data-dead-href="/w/%EC%9E%90%EC%97%B0%EC%83%81%EC%88%98.ko" class="keyword dead">자연 상수</a>, 2, 10인 경우에 대해서 각각 두 개씩 정의되어 총 12개 있다. 두 개씩 정의된 이유는, 보통의 <span class="math math-inline">e^x</span>와 <span class="math math-inline">\log x</span> 말고도 <span class="math math-inline">e^x - 1</span>과 <span class="math math-inline">\log (1+x)</span>를 따로 제공하는 게 구현상으로 더 정밀도가 높은 경우가 많기 때문이다. 이 두 변종은 각각 <code>expm1</code>과 <code>log1p</code>라고 명명되었다.</li>
+<li>IEEE 754-1985의 <a title="→ 거듭제곱" data-dead-href="/w/%EA%B1%B0%EB%93%AD%EC%A0%9C%EA%B3%B1.ko" class="keyword dead">거듭제곱</a>(<code>pow</code> 함수)은 <a href="/w/0%EC%9D%980%EC%A0%9C%EA%B3%B1.ko" title="→ 0의0제곱" class="keyword">0의 0제곱</a>을 1로 정의한다. 해당 문서를 보면 알겠지만 이는 아주 말이 안 되는 정의는 아니지만, 이렇게 동작하지 않는 걸 선호하는 사람들도 있기 때문에 IEEE 754-2008에서는 <code>pown</code>(지수가 정수여야 하며, <em>x</em><sup>0</sup> = 1로 정의) 함수와 <code>powr</code>(밑수가 항상 양수여야 함) 함수가 새로 추가되었다.</li>
+<li>모든 삼각함수에는 <a title="→ 호도법" data-dead-href="/w/%ED%98%B8%EB%8F%84%EB%B2%95.ko" class="keyword dead">호도법</a>으로 표현될 인자/결과값에 <a title="→ 원주율" data-dead-href="/w/%EC%9B%90%EC%A3%BC%EC%9C%A8.ko" class="keyword dead">원주율</a>을 곱한 버전이 하나씩 더 있다. 예를 들어 <code>sinPi(0.5) = sin(pi/2)</code>.</li>
+</ul>
+<p>그냥 그 의미를 알 수 없는 것조차 있다:</p>
+<ul>
+<li><code>copysign(x,y)</code> 함수는 x에서 부호를, y에서 절대값을 따 온 새로운 실수를 반환한다. 이 함수의 거의 유일한 쓸모는 -0과 +0을 구분하는 용도. 뭐시라?!</li>
+<li><a title="→ 나머지연산" data-dead-href="/w/%EB%82%98%EB%A8%B8%EC%A7%80%EC%97%B0%EC%82%B0.ko" class="keyword dead">나머지 연산</a>은 피연산자 중 하나라도 음수일 때 잘 정의되지 않는데, IEEE 754 <code>remainder</code> 함수는 이 중 한 가지 경우를 엄밀하게 정의한다. 그런데 이 한 가지 경우라는 게… <em>x</em>를 <em>y</em>로 나눈 나머지를 <em>z</em>라 할 때, <em>z</em>가 ±½<em>y</em> 사이에 들어오도록 <em>z</em>를 정의하는 것인지라 <strong><em>x</em>와 <em>y</em>가 양수여도 음수 나머지가 나올 수 있다.</strong> 예를 들어 <code>remainder(8, 3) = -1</code>. <s><a title="→ 무슨마약하시길래이런생각을했어요" data-dead-href="/w/%EB%AC%B4%EC%8A%A8%EB%A7%88%EC%95%BD%ED%95%98%EC%8B%9C%EA%B8%B8%EB%9E%98%EC%9D%B4%EB%9F%B0%EC%83%9D%EA%B0%81%EC%9D%84%ED%96%88%EC%96%B4%EC%9A%94.ko" class="keyword dead">무슨 마약하시길래 이런 생각을 했어요</a></s></li>
+</ul>
+<h2><span class="header-section-number">4</span> 오류</h2>
+<p>연산들은 각종 오류(7장)를 발생시킬 수 있는데, 총 다섯 개가 존재한다. 기본적으로는 이들 오류가 났을 때 연산이 중지되지는 않고 특정한 플래그만을 설정시킨 뒤 기본 반환값을 반환하며 속행되지만 사용자가 오류시 행동을 지정하는 것도 가능하다(8장). 오류의 종류는 다음과 같다.</p>
+<dl>
+<dt>잘못된 연산 (invalid operation)</dt>
+<dd>연산의 결과가 정의되지 않거나 인자가 예상한 범위를 벗어나는 경우. 연산이 qNaN을 반환하는 경우가 사실은 바로 이 오류가 (조용히) 처리되었을 경우 나오는 것이다.</dd>
+<dt>0으로 나누기 (division by zero)</dt>
+<dd>말 그대로 나눗셈의 오른쪽 피연산자가 +0 또는 -0인 경우. 기본 동작은 +∞ 또는 -∞를 반환하는 것이다.</dd>
+<dt>오버플로 (overflow)</dt>
+<dd>반올림 처리를 했는데 원래 값이 ±∞이 아닌데도 그 결과가 +∞ 또는 -∞이 되어야만 하는 경우. 기본 동작은 부정확 플래그를 함께 설정하는 것이다(당연히, 오버플로가 되었으면 부정확한 것이니까).</dd>
+<dt>언더플로 (underflow)</dt>
+<dd>반올림 처리를 했는데 원래 값이 ±0이 아닌데도 그 결과가 +0 또는 -0이 되어야만 하는 경우. 기본 동작은 오버플로와 비슷하다.</dd>
+<dt>부정확 (inexact)</dt>
+<dd>연산의 결과가 무한히 정확한 가수부와 범위가 무제한인 지수부로 표현했을 때의 결과랑 다를 경우.</dd>
+</dl>
+<h2><span class="header-section-number">5</span> 같이 보기</h2>
+<ul>
+<li><a title="→ 펜티엄-fdiv-버그" data-dead-href="/w/%ED%8E%9C%ED%8B%B0%EC%97%84-fdiv-%EB%B2%84%EA%B7%B8.ko" class="keyword dead">펜티엄 FDIV 버그</a></li>
+</ul>
+<h2><span class="header-section-number">6</span> 바깥 링크</h2>
+<ul>
+<li>〈<a href="http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html">모든 전산학자가 부동소숫점 산술에 대해 알아야 할 것들</a>(What Every Computer Scientist Should Know About Floating-Point Arithmetic)〉 (<a title="→ 전산기학회" data-dead-href="/w/%EC%A0%84%EC%82%B0%EA%B8%B0%ED%95%99%ED%9A%8C.ko" class="keyword dead">ACM</a> Computing Surveys, 1991)</li>
+</ul>
+<section class="footnotes"><hr />
+<section id="fn1"><h6>1</h6><p>즉, <em>m</em>은 정규화를 할 때(<em>R</em>=1)는 [½, 1)의 범위로 변환되고, 정규화를 하지 않을 때(<em>R</em>=0)는 그대로, [0, 1)의 범위로 사용한다. <a href="#fnref1" class="footnote-back">▲</a></p></section>
+<section id="fn2"><h6>2</h6><p>이 문단에 관련해서는 IEEE 754 표준의 초안(Kahan-Coonen-Stone 제안)을 쓴 <a title="→ william-kahan" data-dead-href="/w/william-kahan.ko" class="keyword dead">William Kahan</a>의 1998년 <a href="http://www.eecs.berkeley.edu/~wkahan/ieee754status/754story.html">인터뷰</a>를 참고. <a href="#fnref2" class="footnote-back">▲</a></p></section>
+<section id="fn3"><h6>3</h6><p>이 특성을 악용(…)하는 대표적인 예로 <a title="→ luajit" data-dead-href="/w/luajit.ko" class="keyword dead">LuaJIT</a>이 있다. LuaJIT은 <a title="→ binary64" data-dead-href="/w/binary64.ko" class="keyword dead">binary64</a> 포맷의 가수부에 웬만한 <a title="→ 포인터" data-dead-href="/w/%ED%8F%AC%EC%9D%B8%ED%84%B0.ko" class="keyword dead">포인터</a> 값이 들어간다는 점에 착안해서 qNaN에 숫자가 아닌 다른 값을 넣는 기행을 저지른다. 이러면 숫자가 아닌 다른 정보를 나타내기 위해 별도의 비트를 둘 필요가 없이 64비트로 모든 값을 나타낼 수 있게 된다. <a href="#fnref3" class="footnote-back">▲</a></p></section>
+<section id="fn4"><h6>4</h6><p><span class="math math-inline">(n+R) \log_{10} b</span>. 십진법으로 나타냈을 때 유효 자릿수. <a href="#fnref4" class="footnote-back">▲</a></p></section>
+<section id="fn5"><h6>5</h6><p><span class="math math-inline">\approx b^{e_{max}}</span>. 표현할 수 있는 가장 큰 유한한 실수의 <strong>상한</strong>. 따라서 여기 나온 숫자 자체는 해당 포맷으로 절대로 표현 못 한다. <a href="#fnref5" class="footnote-back">▲</a></p></section>
+</section>
+</main>
+<footer>
+<p id="mearie-meta"><code><i class="mearie-logo"></i>/754</code> | 마지막 수정 <time>2016-05-29T19:22:13+0000</time> (<code>12e94c38778d</code>)</p>
+<address>저작권자 &copy; 1999&ndash;2016, 강 성훈. <a href="/about/copyright.ko" rel="copyright">저작권을 약간 가집니다.</a></address>
+</footer>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<!--[if gt IE 8]>--><html lang="ko"><!--<![endif]--><!--[if lte IE 8]><html lang="ko" class="mearie-ancient"><![endif]-->
+<head>
+<meta charset="utf-8">
+<title>유닉스 시간 | 메아리</title>
+<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="canonical" href="/w/유닉스시간.ko" />
+<link rel="shortlink" href="/unxt" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
+<!--[if gt IE 6]><![IGNORE[-->
+<script src="/res/mearie.js"></script>
+<link rel="stylesheet" href="/res/main.css" />
+<!--<![endif]-->
+</head>
+<body>
+<header>
+<div id="mearie-logo">
+<a href="/index.ko" rel="home">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 182 186">
+<path d="M0 0h54v102h-35v52h35v32h-54m34-70h20v24h-20" />
+<path d="M64 0h54v100a22 22 0 0 0 0 56v30h-54m54-72a12 12 0 0 0 0 28v-28" />
+<path d="M128 0h54v102h-33v12h33v8h-33v32h33v32h-54m35-52h19v8h-19" />
+</svg>
+ 메아리</a>
+</div>
+<h1><span class="parent"><a href="/w/index.ko">낱말들</a><br /></span>유닉스 시간</h1>
+</header>
+<main role="main">
+<p><a title="→ 유닉스" data-dead-href="/w/%EC%9C%A0%EB%8B%89%EC%8A%A4.ko" class="keyword dead">유닉스</a> 계열, 또는 <a title="→ posix" data-dead-href="/w/posix.ko" class="keyword dead">POSIX</a>를 준수하는 <a href="/w/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C.ko" title="→ 운영체제" class="keyword">운영체제</a>에서 사용하는 <a title="→ 시각" data-dead-href="/w/%EC%8B%9C%EA%B0%81.ko" class="keyword dead">시각</a> 표기. 일반적으로 유닉스 시간이라고 하는 것은 <a title="→ c언어" data-dead-href="/w/c%EC%96%B8%EC%96%B4.ko" class="keyword dead">C언어</a>에서 <code>time_t</code>의 값으로, 표준 C에서는 이 값의 의미를 전혀 정의하지 않지만<a id="fnref1" class="footnote" href="#fn1"><sup><span>[</span>1<span>]</span></sup></a> POSIX에서는 이 값을 명확히 정의하고 있다. 정확한 정의는:</p>
+<blockquote><p>1970-01-01T00:00:00Z <a title="→ utc" data-dead-href="/w/utc.ko" class="keyword dead">UTC</a>로 정의된 <a title="→ 기원" data-dead-href="/w/%EA%B8%B0%EC%9B%90.ko" class="keyword dead">기원</a>으로부터 지난 시간을 <a title="→ 초" data-dead-href="/w/%EC%B4%88.ko" class="keyword dead">초</a> 단위로 <strong>근사</strong>하는 값<a id="fnref2" class="footnote" href="#fn2"><sup><span>[</span>2<span>]</span></sup></a></p></blockquote>
+<p>이다. 이 정의가 UTC와 일대일 대응이 되지 않고 근사하도록 정의된 이유는 유닉스 시간을 <a title="→ 윤초" data-dead-href="/w/%EC%9C%A4%EC%B4%88.ko" class="keyword dead">윤초</a>를 무시하고 UTC 표현으로부터 간단한 계산만으로 구할 수 있도록 되어 있기 때문이다. 그러하니 당연히 윤초가 추가될 때는 윤초 직전의 초와 윤초의 유닉스 시간 값이 겹치고, 윤초가 빠질 때는 빠진 윤초에 해당하는 유닉스 시간 값을 건너 뛰게 된다. 윤초를 건너 뛰는 것 뿐만이 아니라 현재 기원(1970년)은 UTC가 현재의 형태로 정착된 때(1972년)보다 이전이라 1972년 이전에 해당하는 유닉스 시간은 잘 정의되어 있지 않다고 할 수 있다.</p>
+<p>이런 저런 문제에도 불구하고 유닉스 시간은 유닉스 계열 운영체제 뿐만 아니라 많은 <a title="→ 프로그래밍언어" data-dead-href="/w/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D%EC%96%B8%EC%96%B4.ko" class="keyword dead">프로그래밍 언어</a>와 <a href="/w/%ED%8C%8C%EC%9D%BC%ED%8F%AC%EB%A7%B7.ko" title="→ 파일포맷" class="keyword">파일 포맷</a>, <a title="→ 프로토콜" data-dead-href="/w/%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C.ko" class="keyword dead">프로토콜</a> 등에서 사용하고 있다. 이 중 32<a title="→ 비트" data-dead-href="/w/%EB%B9%84%ED%8A%B8.ko" class="keyword dead">비트</a>로 유닉스 시간을 표현하는 시스템에서는 “2038년 문제”라 불리는 <a title="→ y2k" data-dead-href="/w/y2k.ko" class="keyword dead">Y2K</a> 뺨치는 문제가 생길 예정이다. (<code>time_t</code>가 <a title="→ 부호없는정수" data-dead-href="/w/%EB%B6%80%ED%98%B8%EC%97%86%EB%8A%94%EC%A0%95%EC%88%98.ko" class="keyword dead">부호없는 정수</a>이면 좀 더 시간을 벌 수 있겠지만, 호환성 등의 문제로 보통 부호 있는 정수를 쓰기 때문에 시간을 벌기는 어렵다.)</p>
+<a name="more"><!-- more --></a>
+<h2><span class="header-section-number">1</span> 오버플로</h2>
+<p>유닉스 시간이 특정 값을 넘겼을 때 생기는 문제는 <a title="→ 소프트웨어" data-dead-href="/w/%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4.ko" class="keyword dead">소프트웨어</a> <a title="→ 버그" data-dead-href="/w/%EB%B2%84%EA%B7%B8.ko" class="keyword dead">버그</a>의 온상이 되고 있다. 예를 들어,</p>
+<ul>
+<li>유닉스 시간 10 0000 0000(<a title="→ 2001" data-dead-href="/w/2001.ko" class="keyword dead">2001</a>-09-09T01:46:40Z)은 처음으로 유닉스 시간이 <a title="→ 십진법" data-dead-href="/w/%EC%8B%AD%EC%A7%84%EB%B2%95.ko" class="keyword dead">십진법</a> 열자리가 된 때이다. 덕택에 <a title="→ iris-nx" data-dead-href="/w/iris-nx.ko" class="keyword dead">Iris NX</a> 같이 유닉스 시간을 문자열로 인코딩해서 정렬하는 소프트웨어들이 모조리 순서를 엉터리로 표시하는 문제를 겪었다.</li>
+<li>유닉스 시간 2<sup>31</sup> = 21 4748 3648(2038-01-19T03:14:07Z)은 유닉스 시간이 32<a title="→ 비트" data-dead-href="/w/%EB%B9%84%ED%8A%B8.ko" class="keyword dead">비트</a> <a title="→ 2의보수" data-dead-href="/w/2%EC%9D%98%EB%B3%B4%EC%88%98.ko" class="keyword dead">2의 보수</a> 표현으로 더 이상 표현 불가능한, 즉 [<a href="#">오버플로</a>]되는 때이다. 그 때까지 문제를 해결 못 한 소프트웨어에서는 각종 “2038년 문제”가 발생할 예정이다.
+<ul>
+<li>유닉스 시간 2<sup>31</sup>-10<sup>9</sup> = 11 4748 3648(<a title="→ 2006" data-dead-href="/w/2006.ko" class="keyword dead">2006</a>-05-13T01:27:28Z)에 AOLServer의 기본 설정이 문제를 일으키는 <a href="http://www.mail-archive.com/aolserver@listserv.aol.com/msg09812.html">사례</a>가 있었다. 이 사건은 2038년 문제의 첫 사례로 기록되었다.</li>
+</ul></li>
+</ul>
+<section class="footnotes"><hr />
+<section id="fn1"><h6>1</h6><p>심지어 <a title="→ 단조증가" data-dead-href="/w/%EB%8B%A8%EC%A1%B0%EC%A6%9D%EA%B0%80.ko" class="keyword dead">단조증가</a>하지 않아도 적법하며, 실제로 POSIX 표준에 따르면 윤초가 추가될 때 유닉스 시간은 단조증가하지 않는다. <a href="#fnref1" class="footnote-back">▲</a></p></section>
+<section id="fn2"><h6>2</h6><p>POSIX:2001 이후의 정의. 이전 버전은 <a title="→ 윤년" data-dead-href="/w/%EC%9C%A4%EB%85%84.ko" class="keyword dead">윤년</a>에 대한 처리에 큰 문제가 있었다. <a href="#fnref2" class="footnote-back">▲</a></p></section>
+</section>
+</main>
+<footer>
+<p id="mearie-meta"><code><i class="mearie-logo"></i>/unxt</code> | 마지막 수정 <time>2016-05-29T19:22:13+0000</time> (<code>12e94c38778d</code>)</p>
+<address>저작권자 &copy; 1999&ndash;2016, 강 성훈. <a href="/about/copyright.ko" rel="copyright">저작권을 약간 가집니다.</a></address>
+</footer>
+</body>
+</html>

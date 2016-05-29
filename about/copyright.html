@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Multiple Choices | mearie.org</title>
+
+<script>
+var preferred = (navigator.userLanguage || navigator.language || "en").toLowerCase();
+var langs = ["en","ko",0], hasen = false, chosen = "en";
+for (var i = 0; langs[i]; ++i) {
+	if (preferred.substring(0, langs[i].length) == langs[i]) { chosen = langs[i]; break; }
+	hasen |= langs[i] == "en";
+}
+if (!hasen) chosen = langs[0];
+location.replace("/about/copyright." + chosen + location.hash);
+</script>
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
+<style>body{background:#758}*{color:white}</style>
+</head>
+<body>
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 182 186" width="182" height="186" fill="#fff">
+<path d="M0 0h54v102h-35v52h35v32h-54m34-70h20v24h-20" />
+<path d="M64 0h54v100a22 22 0 0 0 0 56v30h-54m54-72a12 12 0 0 0 0 28v-28" />
+<path d="M128 0h54v102h-33v12h33v8h-33v32h33v32h-54m35-52h19v8h-19" />
+</svg>
+<h1>Multiple Choices</h1>
+<ul>
+<li><a href="/about/copyright.en" hreflang="en">about/copyright.en</a></li>
+<li><a href="/about/copyright.ko" hreflang="ko">about/copyright.ko</a></li>
+</ul>
+<address><a href="/" rel="home">mearie.org</a></address>
+</body>
+</html>

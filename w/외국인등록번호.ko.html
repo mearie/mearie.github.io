@@ -1,0 +1,58 @@
+<!doctype html>
+<!--[if gt IE 8]>--><html lang="ko"><!--<![endif]--><!--[if lte IE 8]><html lang="ko" class="mearie-ancient"><![endif]-->
+<head>
+<meta charset="utf-8">
+<title>외국인등록번호 | 메아리</title>
+<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="canonical" href="/w/외국인등록번호.ko" />
+<link rel="shortlink" href="/karn" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
+<!--[if gt IE 6]><![IGNORE[-->
+<script src="/res/mearie.js"></script>
+<link rel="stylesheet" href="/res/main.css" />
+<!--<![endif]-->
+</head>
+<body>
+<header>
+<div id="mearie-logo">
+<a href="/index.ko" rel="home">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 182 186">
+<path d="M0 0h54v102h-35v52h35v32h-54m34-70h20v24h-20" />
+<path d="M64 0h54v100a22 22 0 0 0 0 56v30h-54m54-72a12 12 0 0 0 0 28v-28" />
+<path d="M128 0h54v102h-33v12h33v8h-33v32h33v32h-54m35-52h19v8h-19" />
+</svg>
+ 메아리</a>
+</div>
+<h1><span class="parent"><a href="/w/index.ko">낱말들</a><br /></span>외국인등록번호</h1>
+</header>
+<main role="main">
+<p><a title="→ 대한민국" data-dead-href="/w/%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD.ko" class="keyword dead">대한민국</a>의 모든 <a title="→ 외국인" data-dead-href="/w/%EC%99%B8%EA%B5%AD%EC%9D%B8.ko" class="keyword dead">외국인</a>들에게 발급되는 <a title="→ 식별번호" data-dead-href="/w/%EC%8B%9D%EB%B3%84%EB%B2%88%ED%98%B8.ko" class="keyword dead">식별번호</a>. 구조상 <a href="/w/%EC%A3%BC%EB%AF%BC%EB%93%B1%EB%A1%9D%EB%B2%88%ED%98%B8.ko" title="→ 주민등록번호" class="keyword">주민등록번호</a>와 동일한 체계로 구성되어 있지만 주민등록번호는 받는데 외국인등록번호는 안 받는 경우가 아직도 꽤 있다. 이런. <s>그냥 주민등록번호를 안 받으면 안 될까?</s></p>
+<p>엄밀히 말해 외국인등록번호는 “외국국적자가 90일 이상 체류시 출입국관리사무소에서 발급”하는 번호이며, 재외국민이나 외국국적을 가진 동포는 기술적으로는 외국인등록번호와 같은 형태의 국내거소신고번호를 발급받는다. 이도 저도 아닌 경우 임시 번호로 실명번호라 불리는, 여권 번호로부터 유추해 낸 (즉 고유함을 보장할 수 없는) 번호를 사용한다.</p>
+<a name="more"><!-- more --></a>
+<h2><span class="header-section-number">1</span> 규칙</h2>
+<p>외국인등록번호(및 국내거소신고번호)는 13자리 숫자 <code>yymmdd-gaanntp</code>로 다음과 같은 정보를 인코딩한다.</p>
+<ul>
+<li><code>yymmdd</code>: 생년월일 (주민등록번호와 같음)</li>
+<li><code>g</code>: <a title="→ 성별" data-dead-href="/w/%EC%84%B1%EB%B3%84.ko" class="keyword dead">성별</a> 및 생년의 세기 부분 (주민등록번호와 같음)
+<ul>
+<li><code>5</code>/<code>6</code>: 1900~1999년 사이에 탄생</li>
+<li><code>7</code>/<code>8</code>: 2000~2099년 사이에 탄생</li>
+</ul></li>
+<li><code>aa</code>: 등록기관 (실명번호와 중복을 피하기 위해 <code>50</code>부터 할당되었으리라 생각되며, 기관 코드는 모두 짝수로 알려져 있음)</li>
+<li><code>nn</code>: 등록기관 별로 중복되지 않는 일련번호</li>
+<li><code>t</code>: 외국인·재외국민·외국국적동포 분류 (주민등록번호의 일련번호와 같은 위치에 있어 구분이 쉽게 하기 위해 <code>9</code>부터 선택되었다.)
+<ul>
+<li><code>9</code>: 외국인</li>
+<li><code>8</code>: 재외국민</li>
+<li><code>7</code>: 외국국적동포</li>
+</ul></li>
+<li><code>p</code>: 체크 숫자 (주민등록번호와 같음)</li>
+</ul>
+<p>실명번호는 13자리 숫자 <code>yymmdd-gcxxxxx</code>로 앞의 일곱자리를 제외한 나머지 자리는 여권 번호 마지막 다섯 자리(<code>xxxxx</code>) 및 국적(<code>c</code>; <code>1</code>부터 <code>4</code>까지 순서대로 <a title="→ 미국" data-dead-href="/w/%EB%AF%B8%EA%B5%AD.ko" class="keyword dead">미국</a>, <a title="→ 일본" data-dead-href="/w/%EC%9D%BC%EB%B3%B8.ko" class="keyword dead">일본</a>, <a title="→ 중국" data-dead-href="/w/%EC%A4%91%EA%B5%AD.ko" class="keyword dead">중국</a>, 기타국)으로부터 생성된다. 물론 체크 숫자는 전혀 사용하지 않는다.</p>
+</main>
+<footer>
+<p id="mearie-meta"><code><i class="mearie-logo"></i>/karn</code> | 마지막 수정 <time>2016-05-29T19:22:13+0000</time> (<code>12e94c38778d</code>)</p>
+<address>저작권자 &copy; 1999&ndash;2016, 강 성훈. <a href="/about/copyright.ko" rel="copyright">저작권을 약간 가집니다.</a></address>
+</footer>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<!--[if gt IE 8]>--><html lang="ko"><!--<![endif]--><!--[if lte IE 8]><html lang="ko" class="mearie-ancient"><![endif]-->
+<head>
+<meta charset="utf-8">
+<title>정렬 알고리즘 | 메아리</title>
+<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="canonical" href="/w/정렬알고리즘.ko" />
+<link rel="shortlink" href="/sort" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
+<!--[if gt IE 6]><![IGNORE[-->
+<script src="/res/mearie.js"></script>
+<link rel="stylesheet" href="/res/main.css" />
+<!--<![endif]-->
+</head>
+<body>
+<header>
+<div id="mearie-logo">
+<a href="/index.ko" rel="home">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 182 186">
+<path d="M0 0h54v102h-35v52h35v32h-54m34-70h20v24h-20" />
+<path d="M64 0h54v100a22 22 0 0 0 0 56v30h-54m54-72a12 12 0 0 0 0 28v-28" />
+<path d="M128 0h54v102h-33v12h33v8h-33v32h33v32h-54m35-52h19v8h-19" />
+</svg>
+ 메아리</a>
+</div>
+<h1><span class="parent"><a href="/w/index.ko">낱말들</a><br /></span>정렬 알고리즘</h1>
+</header>
+<main role="main">
+<p>정렬 문제, 즉 <span class="math math-inline">n</span>개의 원소가 들어 있는 <a title="→ 배열" data-dead-href="/w/%EB%B0%B0%EC%97%B4.ko" class="keyword dead">배열</a>을 잘 섞어서 순서대로 배치하는 문제를 푸는 <a title="→ 알고리즘" data-dead-href="/w/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.ko" class="keyword dead">알고리즘</a>. <a title="→ 전산학" data-dead-href="/w/%EC%A0%84%EC%82%B0%ED%95%99.ko" class="keyword dead">전산학</a>에서 매우 중요한 문제로 취급받기 때문에 전산학 전공했는데 이걸 모른다고 하는 사람이 있으면 그 사람이 사기꾼일 가능성을 의심해 봐야 한다.</p>
+<p>좀 더 엄밀히 말하면, 어떤 도메인 <span class="math math-inline">A</span>(<a title="→ 정수" data-dead-href="/w/%EC%A0%95%EC%88%98.ko" class="keyword dead">정수</a>라거나 그런 것)로 이루어진 배열 <span class="math math-inline">a_1, a_2, \cdots, a_n \in A</span>가 존재하고 <a title="→ 완전순서" data-dead-href="/w/%EC%99%84%EC%A0%84%EC%88%9C%EC%84%9C.ko" class="keyword dead">완전순서</a> <span class="math math-inline">\le\, \subseteq A \times A</span>가 존재한다 하자. 이제 이 배열의 정렬 <span class="math math-inline">\pi</span>는 이 배열의 순열, 즉 <a title="→ 대칭군" data-dead-href="/w/%EB%8C%80%EC%B9%AD%EA%B5%B0.ko" class="keyword dead">대칭군</a> <span class="math math-inline">\mathrm{S}_n</span>의 원소로 다음 조건을 만족한다:</p>
+<p><span class="math math-display">a_{\pi(1)} \le a_{\pi(2)} \le ... \le a_{\pi(n)}</span></p>
+<p>만약 어느 두 원소도 동일하지 않을 경우(즉, <span class="math math-inline">i \ne j \Longrightarrow (a_i \le a_j \wedge a_j \le a_i)</span>이면) 이 정렬은 항상 존재하며 유일하다. 이는 쉽게 논증할 수 있는데, 정렬이 존재하지 않는다면 완전 순서의 추이율이 위반되고 정렬이 유일하지 않으면 두 정렬에서 공통되지 않은 두 원소가 동일한 원소라는 걸 증명할 수 있게 된다.</p>
+<p>그 자체로도 많이 쓰이고, 다른 알고리즘의 부분으로도 자주 쓰이다 보니 정렬 문제는 매우 잘 분석된 문제 중 하나이다. 도메인 <span class="math math-inline">A</span>와 완전 순서 <span class="math math-inline">\le</span>에 어떤 제약을 가하느냐에 따라 다양한 결과가 나와 있지만, 도메인과 완전 순서에 어떤 제약도 없는 기본적인 버전의 경우 최적 알고리즘이 최악의 입력에 대해 <strong><span class="math math-inline">\mathrm{O}(n \log n)</span></strong>의 <a title="→ 시간복잡도" data-dead-href="/w/%EC%8B%9C%EA%B0%84%EB%B3%B5%EC%9E%A1%EB%8F%84.ko" class="keyword dead">시간복잡도</a>를 가진다는 것이 알려져 있다.<a id="fnref1" class="footnote" href="#fn1"><sup><span>[</span>1<span>]</span></sup></a> 실제로 이 시간복잡도를 가지거나, 최소한 평균적인 입력에 대해 최적의 시간복잡도를 보이는 알고리즘은 꽤 많이 알려져 있으며 뒤에서 서술한다.</p>
+<a name="more"><!-- more --></a>
+<h2><span class="header-section-number">1</span> 분류</h2>
+<p>정렬 알고리즘을 나누는 흔한 분류는 다음과 같은 것이 있다. <s>알고리즘 수가 한 둘이 아니어야 말이지…</s></p>
+<h3><span class="header-section-number">1.1</span> 최악의 입력에 대한 비교 수의 시간복잡도</h3>
+<p>가장 널리 쓰이는 <s>그리고 매우 잘 오용되는</s> 분류. 실용적인 알고리즘의 경우 크게 다음 세 가지 경우 중 하나로 나뉜다.</p>
+<ul>
+<li><span class="math math-inline">\mathrm{O}(n^2)</span> 알고리즘은 최적은 아니지만 보통 구현이 간단하고, 작은 입력의 경우 여러 이유로 다른 알고리즘보다 더 빠른 경우가 있어서 종종 쓰인다.</li>
+<li><span class="math math-inline">\mathrm{O}(n \log n)</span> 알고리즘은 일반적인 경우에 대해 최적의 시간복잡도라서 가장 많이 쓰인다.</li>
+<li><span class="math math-inline">\mathrm{O}(kn)</span> 알고리즘은 도메인 특성에 따라 결정되는 상수 <span class="math math-inline">k</span>에 비례하는 경우로, <a title="→ 기수정렬" data-dead-href="/w/%EA%B8%B0%EC%88%98%EC%A0%95%EB%A0%AC.ko" class="keyword dead">기수정렬</a>(입력이 <a href="/w/%EC%9E%90%EC%97%B0%EC%88%98.ko" title="→ 자연수" class="keyword">자연수</a>라고 가정함) 같은 것이 대표적이다. 도메인에 대해서 더 많은 가정을 할 수 있으므로 보통 일반적인 알고리즘보다 빨라진다.</li>
+</ul>
+<p>그 밖에도 <a title="→ 셸정렬" data-dead-href="/w/%EC%85%B8%EC%A0%95%EB%A0%AC.ko" class="keyword dead">셸정렬</a>(<span class="math math-inline">\mathrm{O}(n \log^2 n)</span> 변종이 알려져 있음)이나 <a title="→ 스투지정렬" data-dead-href="/w/%EC%8A%A4%ED%88%AC%EC%A7%80%EC%A0%95%EB%A0%AC.ko" class="keyword dead">스투지정렬</a>(<span class="math math-inline">\mathrm{O}(n^{\frac{\log 3}{\log 2}})</span>) 같이 어중간한 복잡도를 가진 알고리즘이 어쩌다 있는데, 많이 쓰이지는 않는다.</p>
+<p>엄밀히 말하면, 앞의 두 경우에 대응되는 복잡도와 맨 마지막 경우에 대응되는 복잡도는 서로 다른 복잡도이다. 전자는 “완전 순서 <span class="math math-inline">\le</span>를 호출하는 횟수”를 계산하는 것이고(그래서 이를 “비교정렬”이라 부른다) 후자는 일반적인 연산 횟수를 계산하는 것이다. 그러나 연산 횟수가 비교 횟수에 비례하는 경우가 태반이므로 대부분의 경우 크게 구분해서 쓰지는 않는다.</p>
+<h3><span class="header-section-number">1.2</span> 평균적인 입력에 대한 비교 수의 시간복잡도</h3>
+<p>최악의 입력이 매우 드물게 나타나는 경우에 사용하는 분류. 여기서 말하는 “평균적인 입력”이란 원소 두 개를 무작위로 골랐을 때 그 순서가 반대일 확률이 대략 50%인 경우를 말한다.</p>
+<p>이 분류가 절실하게 필요한 대표적인 알고리즘이 <a title="→ 퀵정렬" data-dead-href="/w/%ED%80%B5%EC%A0%95%EB%A0%AC.ko" class="keyword dead">퀵정렬</a>로, 웬만한 노력을 기울이지 않으면 최악의 경우 시간복잡도가 <span class="math math-inline">\mathrm{O}(n^2)</span>인 입력을 무조건 만들어 내는 게 가능하다.<a id="fnref2" class="footnote" href="#fn2"><sup><span>[</span>2<span>]</span></sup></a> 이런 종류의 알고리즘은 <a title="→ 알고리즘복잡도공격" data-dead-href="/w/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98%EB%B3%B5%EC%9E%A1%EB%8F%84%EA%B3%B5%EA%B2%A9.ko" class="keyword dead">알고리즘 복잡도 공격</a>(algorithmic complexity attack)에 취약할 수 있으므로 각별한 주의가 필요하다.</p>
+<h3><span class="header-section-number">1.3</span> 대부분 정렬된 입력에 대한 비교 수의 시간복잡도</h3>
+<p>“평균적인” 입력과는 별개로, 실제로 들어오는 입력은 이미 거의 정렬되어 있거나 부분적으로라도 순서가 보존되어 있는 경우가 많다. 때문에 실용적으로는 이런 종류의 입력에 대해서 더 빠르게 동작하는 것이 유리하다.</p>
+<p>이 기준으로 유리한 알고리즘은 의외로(…) <a title="→ 삽입정렬" data-dead-href="/w/%EC%82%BD%EC%9E%85%EC%A0%95%EB%A0%AC.ko" class="keyword dead">삽입정렬</a>과 <a title="→ 병합정렬" data-dead-href="/w/%EB%B3%91%ED%95%A9%EC%A0%95%EB%A0%AC.ko" class="keyword dead">병합정렬</a>로, 전자는 시간복잡도가 뒤집힌 원소쌍(inversion)의 수에 비례하기 때문에 가능하고, 후자는 애초에 이미 정렬된 배열 두 개를 반복적으로 합치는 식으로 동작하므로 가능하다. 병합정렬은 최악의 경우에도 최적의 시간복잡도를 보여 주기 때문에 개선의 여지가 매우 많은데, 이를 적극적으로 활용한 알고리즘이 바로 <a title="→ 팀정렬" data-dead-href="/w/%ED%8C%80%EC%A0%95%EB%A0%AC.ko" class="keyword dead">팀정렬</a>이다.</p>
+<h3><span class="header-section-number">1.4</span> 복사 수의 시간복잡도</h3>
+<p>전통적인 정렬 알고리즘은 비교 숫자를 최적화하는데 집중한다. 하지만 비교가 충분히 싸다면 비교 숫자보다 복사 숫자, 즉 메모리 상에서 원소가 옮겨다니는 시간이 더 중요할 수 있다. 이 때문에 비교 수와는 별개로 복사 수를 세는 경우도 있다.</p>
+<p>대부분의 기준에서 매우 최적에 속하는 <a title="→ 병합정렬" data-dead-href="/w/%EB%B3%91%ED%95%A9%EC%A0%95%EB%A0%AC.ko" class="keyword dead">병합정렬</a>이 드물게 최적이 아닌 분류로, 병합정렬은 제자리 정렬을 하면 성능이 나빠지기 때문에 원소를 복사하는 숫자로 따지면 불리할 수 밖에 없다. 반면 <a title="→ 퀵정렬" data-dead-href="/w/%ED%80%B5%EC%A0%95%EB%A0%AC.ko" class="keyword dead">퀵정렬</a>에서 pivot을 구하는데 쓰는 보편적인 알고리즘은 복사 수를 줄이는 데 최적화되어 있다. 그래서 <a title="→ jdk" data-dead-href="/w/jdk.ko" class="keyword dead">JDK</a>의 경우 <code>Comparable</code> 인터페이스가 구현되어 있는, 즉 비교가 느릴 가능성이 큰 경우에만 병합정렬의 일종인 <a title="→ 팀정렬" data-dead-href="/w/%ED%8C%80%EC%A0%95%EB%A0%AC.ko" class="keyword dead">팀정렬</a>을 사용하고, 숫자 같이 비교가 값싼 경우에는 퀵정렬의 변종을 사용한다.</p>
+<h3><span class="header-section-number">1.5</span> 공간복잡도</h3>
+<p>원소 자체를 저장하는 메모리 말고 추가적으로 필요한 임시 메모리에 대한 복잡도. 따라서 공간복잡도가 <span class="math math-inline">\mathrm{O}(1)</span>이라는 얘기는 원소가 저장된 배열 안에서 두 원소를 교환하는 걸 반복해 가면서 정렬을 수행하는, 즉 “제자리”(in-place) 정렬이라는 뜻이 된다. 메모리가 넘쳐나는 요즘 들어서는 그렇게 부각되진 않는 특징이기도 하다.</p>
+<h3><span class="header-section-number">1.6</span> 순서 안정성</h3>
+<p>여기서 말하는 안정성이란, 원소 <span class="math math-inline">a_i</span>와 <span class="math math-inline">a_j</span>가 있고 <span class="math math-inline">i &lt; j</span>일 때, <span class="math math-inline">a_i \le a_j</span>이고 <span class="math math-inline">a_j \le a_i</span>였다면 정렬 후에도 둘이 뒤집혀서는 안 된다(<span class="math math-inline">\pi(i) &lt; \pi(j)</span>)는 뜻이다. 즉 같은 원소 사이의 상대적인 순서를 보존한다는 뜻. 특히 만약 모든 원소가 (<span class="math math-inline">\le</span>에 대해) 같은 원소로 처리될 경우 입력과 출력은 완전히 동일해야 한다.</p>
+<p>안정적이지 않은 정렬의 대표적인 예로 <a title="→ 퀵정렬" data-dead-href="/w/%ED%80%B5%EC%A0%95%EB%A0%AC.ko" class="keyword dead">퀵정렬</a>이 있고, 안정적인 정렬로는 <a title="→ 병합정렬" data-dead-href="/w/%EB%B3%91%ED%95%A9%EC%A0%95%EB%A0%AC.ko" class="keyword dead">병합정렬</a>(의 일부 버전)이 있다. 전통적으로 순서 안전성을 포기하면 빨라진다는 생각이 있어서 둘을 구분해 놓았던 것이지만, 어찌 된 것이 최근 들어서는 안정적인 정렬이 실용적인 입력에서 빨라지는 기현상이 나타나고 있어서 현재는 그렇게 의미가 없는 분류가 되어 가고 있다.</p>
+<p>안정적이지 않은 정렬을 안정적인 정렬로 만드는 것 자체는 (좀 부하가 걸릴 뿐) 자명하다. <a title="→ decorate-sort-undecorate" data-dead-href="/w/decorate-sort-undecorate.ko" class="keyword dead">decorate-sort-undecorate</a> 참고.</p>
+<h2><span class="header-section-number">2</span> 목록</h2>
+<ul>
+<li><span class="math math-inline">\mathrm{O}(n^2)</span> 시간복잡도: <a title="→ 삽입정렬" data-dead-href="/w/%EC%82%BD%EC%9E%85%EC%A0%95%EB%A0%AC.ko" class="keyword dead">삽입정렬</a> – <a title="→ 거품정렬" data-dead-href="/w/%EA%B1%B0%ED%92%88%EC%A0%95%EB%A0%AC.ko" class="keyword dead">거품정렬</a> – <a title="→ 선택정렬" data-dead-href="/w/%EC%84%A0%ED%83%9D%EC%A0%95%EB%A0%AC.ko" class="keyword dead">선택정렬</a></li>
+<li><span class="math math-inline">\mathrm{O}(n \log n)</span> 시간복잡도: <a title="→ 퀵정렬" data-dead-href="/w/%ED%80%B5%EC%A0%95%EB%A0%AC.ko" class="keyword dead">퀵정렬</a> (<a title="→ 삼항퀵정렬" data-dead-href="/w/%EC%82%BC%ED%95%AD%ED%80%B5%EC%A0%95%EB%A0%AC.ko" class="keyword dead">삼항 퀵정렬</a>) – <a title="→ 병합정렬" data-dead-href="/w/%EB%B3%91%ED%95%A9%EC%A0%95%EB%A0%AC.ko" class="keyword dead">병합정렬</a> (<a title="→ 팀정렬" data-dead-href="/w/%ED%8C%80%EC%A0%95%EB%A0%AC.ko" class="keyword dead">팀정렬</a>) – <a title="→ 힙정렬" data-dead-href="/w/%ED%9E%99%EC%A0%95%EB%A0%AC.ko" class="keyword dead">힙정렬</a></li>
+<li><span class="math math-inline">\mathrm{O}(kn)</span> 시간복잡도: <a title="→ 기수정렬" data-dead-href="/w/%EA%B8%B0%EC%88%98%EC%A0%95%EB%A0%AC.ko" class="keyword dead">기수정렬</a></li>
+</ul>
+<section class="footnotes"><hr />
+<section id="fn1"><h6>1</h6><p>이 결과는 가능한 모든 대칭군의 숫자, 즉 <span class="math math-inline">\vert \mathrm{S}_n \vert = n!</span>이기 때문에 <span class="math math-inline">\le</span>를 <span class="math math-inline">\log_2 n!</span>회, 즉 (<a title="→ 스털링근사" data-dead-href="/w/%EC%8A%A4%ED%84%B8%EB%A7%81%EA%B7%BC%EC%82%AC.ko" class="keyword dead">스털링 근사</a>에 따라) <span class="math math-inline">n \log n</span>회 이상 호출하지 않으면 가능한 순열을 빼먹을 수있다는 데서 유도할 수 있다. <a href="#fnref1" class="footnote-back">▲</a></p></section>
+<section id="fn2"><h6>2</h6><p><a href="http://research.swtch.com/qsort">Killing Quicksort</a>. 여러 회피 방법이 있지만 이 회피 방법들을 적용하느니 문제가 없는 다른 알고리즘을 쓰는 게 더 나은 수준이다. 자세한 것은 해당 문서 참조. <a href="#fnref2" class="footnote-back">▲</a></p></section>
+</section>
+</main>
+<footer>
+<p id="mearie-meta"><code><i class="mearie-logo"></i>/sort</code> | 마지막 수정 <time>2016-05-29T19:22:13+0000</time> (<code>12e94c38778d</code>)</p>
+<address>저작권자 &copy; 1999&ndash;2016, 강 성훈. <a href="/about/copyright.ko" rel="copyright">저작권을 약간 가집니다.</a></address>
+</footer>
+</body>
+</html>

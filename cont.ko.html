@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Redirecting... | mearie.org</title>
+
+<script>
+var referrer = document.referrer || "";
+var origin = location.origin || (location.protocol + "//" + location.host);
+if (referrer.substring(0, origin.length) === origin && !referrer.match(/\.[a-z]{2}(?:\.html)?$/i)) {
+	var href = location.href.replace(/(?:(\/)index)?\.[a-z]{2}$/i, "$1");
+	history.replaceState(history.state, "", href + location.hash);
+}
+location.replace("/about/contact.ko" + location.hash);
+</script>
+<meta http-equiv="Refresh" content="0; URL=/about/contact.ko" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
+<style>body{background:#758}*{color:white}</style>
+</head>
+<body>
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 182 186" width="182" height="186" fill="#fff">
+<path d="M0 0h54v102h-35v52h35v32h-54m34-70h20v24h-20" />
+<path d="M64 0h54v100a22 22 0 0 0 0 56v30h-54m54-72a12 12 0 0 0 0 28v-28" />
+<path d="M128 0h54v102h-33v12h33v8h-33v32h33v32h-54m35-52h19v8h-19" />
+</svg>
+<h1>Redirecting...</h1>
+<p>Or jump directly to <a href="/about/contact.ko">about/contact.ko</a>.</p>
+<address><a href="/" rel="home">mearie.org</a></address>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<!--[if gt IE 8]>--><html lang="ko"><!--<![endif]--><!--[if lte IE 8]><html lang="ko" class="mearie-ancient"><![endif]-->
+<head>
+<meta charset="utf-8">
+<title>ISO 8601 | 메아리</title>
+<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="canonical" href="/w/iso-8601.ko" />
+<link rel="shortlink" href="/8601" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
+<!--[if gt IE 6]><![IGNORE[-->
+<script src="/res/mearie.js"></script>
+<link rel="stylesheet" href="/res/main.css" />
+<!--<![endif]-->
+</head>
+<body>
+<header>
+<div id="mearie-logo">
+<a href="/index.ko" rel="home">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 182 186">
+<path d="M0 0h54v102h-35v52h35v32h-54m34-70h20v24h-20" />
+<path d="M64 0h54v100a22 22 0 0 0 0 56v30h-54m54-72a12 12 0 0 0 0 28v-28" />
+<path d="M128 0h54v102h-33v12h33v8h-33v32h33v32h-54m35-52h19v8h-19" />
+</svg>
+ 메아리</a>
+</div>
+<h1><span class="parent"><a href="/w/index.ko">낱말들</a><br /></span>ISO 8601</h1>
+</header>
+<main role="main">
+<p><a title="→ 시각표기" data-dead-href="/w/%EC%8B%9C%EA%B0%81%ED%91%9C%EA%B8%B0.ko" class="keyword dead">시각 표기</a>에 대한 <a title="→ iso-표준" data-dead-href="/w/iso-%ED%91%9C%EC%A4%80.ko" class="keyword dead">ISO 표준</a>.</p>
+<a name="more"><!-- more --></a>
+<h2><span class="header-section-number">1</span> 요약</h2>
+<p>쓸데 없는 얘기를 모두 쳐 내고 본론만 말하면, ISO 8601은 다음과 같은 표현에 대한 표준을 제공한다.</p>
+<dl>
+<dt>날짜</dt>
+<dd><ul>
+<li>년·월·일: <code>2010</code><a id="fnref1" class="footnote" href="#fn1"><sup><span>[</span>1<span>]</span></sup></a>, <code>2010-10</code>, <code>2010-10-23</code> (또는 <code>20101023</code>)</li>
+<li>년·일 (ordinal date): <code>2010-296</code> (또는 <code>2010296</code>)</li>
+<li>년·<a href="/w/iso%EC%A3%BC.ko" title="→ iso주" class="keyword">주</a>·<a title="→ 요일" data-dead-href="/w/%EC%9A%94%EC%9D%BC.ko" class="keyword dead">요일</a> (week date): <code>2010-W42</code> (또는 <code>2010W42</code>), <code>2010-W42-6</code><a id="fnref2" class="footnote" href="#fn2"><sup><span>[</span>2<span>]</span></sup></a> (또는 <code>2010W426</code>)</li>
+</ul></dd>
+<dt>시각</dt>
+<dd><ul>
+<li>시·분·초: <code>03</code>, <code>03:45</code> (또는 <code>0345</code>), <code>03:45:17</code> (또는 <code>034517</code>), <code>03:45:17,896</code> (또는 <code>034517,896</code>), <code>24:00:00</code><a id="fnref3" class="footnote" href="#fn3"><sup><span>[</span>3<span>]</span></sup></a> (또는 <code>24</code> 이나 <code>2400</code>, <code>24:00</code>)</li>
+<li>시·분·초·<a title="→ 시간대" data-dead-href="/w/%EC%8B%9C%EA%B0%84%EB%8C%80.ko" class="keyword dead">시간대</a>: <code>18:45:17Z</code>, <code>03:45:17+09</code>, <code>03:45:17+09:00</code> (또는 <code>03:45:17+0900</code>이나 <code>034517+0900</code> 등등)</li>
+</ul></dd>
+<dt>날짜 + 시각</dt>
+<dd><code>2010-10-23T18:45:17</code> (또는 <code>20101023T184517</code> 등등), <code>2010-10-23T18:45:17+09:00</code><a id="fnref4" class="footnote" href="#fn4"><sup><span>[</span>4<span>]</span></sup></a> (또는 <code>20101023T184517+0900</code> 등등)</dd>
+<dt>시간 (duration)</dt>
+<dd><ul>
+<li>년·개월·일·시간·분·초: <code>P3Y5M7D</code>, <code>PT23H56M4S</code>, <code>P23,11Y</code>, <code>PT36H</code> (또는 <code>P1DT12H</code> 등등)</li>
+<li>(축약형): <code>P0003-05-07</code> (또는 <code>P00030507</code>), <code>P0000-00-00T23:56:04</code> (또는 <code>P00000000T235604</code>)</li>
+<li>주: <code>P4W</code></li>
+</ul></dd>
+<dt>기간 (time interval)</dt>
+<dd><ul>
+<li>시작·끝: <code>1950-06-25/1953-07-27</code>, <code>1950-06-25T00:00:00+09:00/1953-07-27T24:00:00+09:00</code></li>
+<li>시각·지속시간: <code>1950-06-25/P3Y1M2D</code></li>
+<li>지속시간·끝: <code>P3Y1M2D/1953-07-27</code></li>
+</ul></dd>
+<dt>반복되는 기간 (repeating time interval)</dt>
+<dd><ul>
+<li>회수·간격: <code>R52/P1W</code></li>
+<li>반복 회수 미정: <code>R/P1W</code></li>
+</ul></dd>
+</dl>
+<p>ISO 8601은 또한 <a title="→ 그레고리력" data-dead-href="/w/%EA%B7%B8%EB%A0%88%EA%B3%A0%EB%A6%AC%EB%A0%A5.ko" class="keyword dead">그레고리력</a>에 대한 기준점 — <a title="→ 미터조약" data-dead-href="/w/%EB%AF%B8%ED%84%B0%EC%A1%B0%EC%95%BD.ko" class="keyword dead">미터조약</a>이 체결된 1875-05-20 — 과 <a href="/w/iso%EC%A3%BC.ko" title="→ iso주" class="keyword">ISO주</a>에 대한 정의도 함께 담고 있다.</p>
+<h2><span class="header-section-number">2</span> 특징</h2>
+<ul>
+<li>어느 상황에서도 모호하게 해석될 수 없다. 예를 들어서 <code>10-11-12</code>와 같이 매우 모호할 수 밖에 없는 (여섯 가지 해석 모두 가능함) 표기법을 최대한 배제한다.</li>
+<li>같은 포맷을 사용하는 표기들 사이에 <a title="→ 사전순정렬" data-dead-href="/w/%EC%82%AC%EC%A0%84%EC%88%9C%EC%A0%95%EB%A0%AC.ko" class="keyword dead">사전순 정렬</a>이 가능하다. (같은 포맷이라 함은 5자리 이상의 연도를 사용할 경우 그 연도의 자릿수도 같아야 함을 의미한다.)</li>
+<li><a title="→ rfc-822" data-dead-href="/w/rfc-822.ko" class="keyword dead">RFC 822</a> 같은 표기법과는 달리 해석이 매우 간단하다.</li>
+<li><code>Jul</code>, <code>Aug</code> 등의 자연어 낱말을 사용하지 않아서 언어 독립적이다. (물론 요일 표기까지 모두 숫자로 대체한 걸 좋아하지 않는 사람들은 있을 수 있으나…)</li>
+<li>대부분의 응용들이 필요로 하는 거의 모든 종류의 표준 표기법을 담고 있기 때문에 필요한 케이스만 취사선택하기가 쉽다. 이를테면 <code>24:00</code>과 같은 자정 표기법을 허용할 것인가 허용하지 않을 것인가 등의 프로필이 존재할 수 있다.</li>
+</ul>
+<section class="footnotes"><hr />
+<section id="fn1"><h6>1</h6><p>항상 4자리여야 하며, <code>0000</code>은 <a href="/w/%EA%B8%B0%EC%9B%90%EC%A0%84.ko" title="→ 기원전" class="keyword">기원전</a> 1년을 나타낸다. 기원전 1년 이전이나 기원후 9999년 이후의 연도는 상호 합의 하에 자리수를 고정시키고 부호를 붙여 <code>+065536</code>과 같이 나타낼 수 있다. <a href="#fnref1" class="footnote-back">▲</a></p></section>
+<section id="fn2"><h6>2</h6><p><a title="→ 월요일" data-dead-href="/w/%EC%9B%94%EC%9A%94%EC%9D%BC.ko" class="keyword dead">월요일</a>부터 <a title="→ 일요일" data-dead-href="/w/%EC%9D%BC%EC%9A%94%EC%9D%BC.ko" class="keyword dead">일요일</a>까지 순서대로 <code>1</code>부터 <code>7</code>까지의 숫자를 사용한다. <a href="#fnref2" class="footnote-back">▲</a></p></section>
+<section id="fn3"><h6>3</h6><p>하루의 끝, 즉 <a title="→ 자정" data-dead-href="/w/%EC%9E%90%EC%A0%95.ko" class="keyword dead">자정</a>을 의미하는 특수한 값. <code>24:01</code> 등은 허용되지 않는다. <a href="#fnref3" class="footnote-back">▲</a></p></section>
+<section id="fn4"><h6>4</h6><p><code>T</code>를 빼고 쓰는 것도 가능하지만 이 경우 별도의 합의가 필요하다. <a href="#fnref4" class="footnote-back">▲</a></p></section>
+</section>
+</main>
+<footer>
+<p id="mearie-meta"><code><i class="mearie-logo"></i>/8601</code> | 마지막 수정 <time>2016-05-29T19:22:13+0000</time> (<code>12e94c38778d</code>)</p>
+<address>저작권자 &copy; 1999&ndash;2016, 강 성훈. <a href="/about/copyright.ko" rel="copyright">저작권을 약간 가집니다.</a></address>
+</footer>
+</body>
+</html>

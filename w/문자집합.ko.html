@@ -1,0 +1,51 @@
+<!doctype html>
+<!--[if gt IE 8]>--><html lang="ko"><!--<![endif]--><!--[if lte IE 8]><html lang="ko" class="mearie-ancient"><![endif]-->
+<head>
+<meta charset="utf-8">
+<title>문자 집합 | 메아리</title>
+<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="canonical" href="/w/문자집합.ko" />
+<link rel="shortlink" href="/cset" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
+<!--[if gt IE 6]><![IGNORE[-->
+<script src="/res/mearie.js"></script>
+<link rel="stylesheet" href="/res/main.css" />
+<!--<![endif]-->
+</head>
+<body>
+<header>
+<div id="mearie-logo">
+<a href="/index.ko" rel="home">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 182 186">
+<path d="M0 0h54v102h-35v52h35v32h-54m34-70h20v24h-20" />
+<path d="M64 0h54v100a22 22 0 0 0 0 56v30h-54m54-72a12 12 0 0 0 0 28v-28" />
+<path d="M128 0h54v102h-33v12h33v8h-33v32h33v32h-54m35-52h19v8h-19" />
+</svg>
+ 메아리</a>
+</div>
+<h1><span class="parent"><a href="/w/index.ko">낱말들</a><br /></span>문자 집합</h1>
+</header>
+<main role="main">
+<p>Character set. 말 그대로, <a title="→ 문자" data-dead-href="/w/%EB%AC%B8%EC%9E%90.ko" class="keyword dead">문자</a>의 <a title="→ 집합" data-dead-href="/w/%EC%A7%91%ED%95%A9.ko" class="keyword dead">집합</a>. 좀 더 정확히는 서로 다른 문자들을 구분하기 위해서 문자들에 번호를 붙여 놓은 것이다(또는 정사각형으로 배열해서 행·열로 부르거나). 그러니까 여기서 말하는 집합은 set이기도 하지만 repertoire로 이해하는 게 더 비슷하다.</p>
+<p><a title="→ 컴퓨터" data-dead-href="/w/%EC%BB%B4%ED%93%A8%ED%84%B0.ko" class="keyword dead">컴퓨터</a> 상에서 문자 집합은 어떤 문자가 표현 가능하고 어떤 문자가 아닌지를 알려 주는 역할을 한다. 예를 들어 “가”는 <a href="/w/ks-x-1001.ko" title="→ ks-x-1001" class="keyword">KS X 1001</a>에서는 48행 33열(30-21)에 배당되어 있고, <a href="/w/%EC%9C%A0%EB%8B%88%EC%BD%94%EB%93%9C.ko" title="→ 유니코드" class="keyword">유니코드</a>에서는 44032번(U+AC00)으로 배당되어 있다. 하지만 <a title="→ ascii" data-dead-href="/w/ascii.ko" class="keyword dead">ASCII</a>에는 포함되어 있지 않으므로 ASCII만 쓸 수 있는 컴퓨터에서는 “가”를 표현할 수 없게 된다(물론 요즘은 이런 컴퓨터는 드물다). 일단 문자 집합이 결정되면, 문자 집합에 있는 문자들을 적절한 <a href="/w/%EB%B0%94%EC%9D%B4%ED%8A%B8.ko" title="→ 바이트" class="keyword">바이트</a>열로 나타내 주는 <a href="/w/%EB%AC%B8%EC%9E%90%EC%9D%B8%EC%BD%94%EB%94%A9.ko" title="→ 문자인코딩" class="keyword">문자 인코딩</a>을 사용해서 실제로 해당하는 문자를 표현할 수 있다. 앞의 예를 계속 쓰면, KS X 1001을 인코딩하는 <a href="/w/euc-kr.ko" title="→ euc-kr" class="keyword">EUC-KR</a>에서 “가”는 <code>B0 A1</code>로, 유니코드를 인코딩하는 <a title="→ utf-8" data-dead-href="/w/utf-8.ko" class="keyword dead">UTF-8</a>에서 <code>EA B0 80</code>으로 저장된다.</p>
+<p>옛날의 많은 문자 집합은 문자 인코딩으로서의 역할도 겸하는 경우가 꽤 많아서 그 구분이 명확하진 않지만<a id="fnref1" class="footnote" href="#fn1"><sup><span>[</span>1<span>]</span></sup></a> 실제로는 구분되는 의미이다. 한 문자 집합으로부터 여러 개의 문자 인코딩이 만들어질 수 있으며, 한 문자 인코딩이 여러 문자 집합을 인코딩할 수도 있다. 이를 잘 보여 주는 예는 <a title="→ 일본어" data-dead-href="/w/%EC%9D%BC%EB%B3%B8%EC%96%B4.ko" class="keyword dead">일본어</a>인데, <a href="/w/shift_jis.ko" title="→ shift_jis" class="keyword">Shift_JIS</a>는 <a title="→ jis-x-0201" data-dead-href="/w/jis-x-0201.ko" class="keyword dead">JIS X 0201</a>과 <a title="→ jis-x-0208" data-dead-href="/w/jis-x-0208.ko" class="keyword dead">JIS X 0208</a> 문자 집합을 함께 인코딩하며, 이 중 JIS X 0208은 <a title="→ euc-jp" data-dead-href="/w/euc-jp.ko" class="keyword dead">EUC-JP</a>를 비롯한 여러 다른 인코딩에서도 지원하고 있다.</p>
+<a name="more"><!-- more --></a>
+<h2><span class="header-section-number">1</span> 목록</h2>
+<ul>
+<li><a href="/w/%EC%9C%A0%EB%8B%88%EC%BD%94%EB%93%9C.ko" title="→ 유니코드" class="keyword">유니코드</a></li>
+<li><a title="→ 로마자" data-dead-href="/w/%EB%A1%9C%EB%A7%88%EC%9E%90.ko" class="keyword dead">로마자</a>: <a title="→ ascii" data-dead-href="/w/ascii.ko" class="keyword dead">ASCII</a>, <a title="→ iso-iec-646" data-dead-href="/w/iso-iec-646.ko" class="keyword dead">ISO/IEC 646</a>, <a title="→ iso-8859-1" data-dead-href="/w/iso-8859-1.ko" class="keyword dead">ISO 8859-1</a>, <a title="→ iso-8859-2" data-dead-href="/w/iso-8859-2.ko" class="keyword dead">ISO 8859-2</a>, <a title="→ iso-8859-3" data-dead-href="/w/iso-8859-3.ko" class="keyword dead">ISO 8859-3</a>, <a title="→ iso-8859-4" data-dead-href="/w/iso-8859-4.ko" class="keyword dead">ISO 8859-4</a>, <a title="→ iso-8859-9" data-dead-href="/w/iso-8859-9.ko" class="keyword dead">ISO 8859-9</a>, <a title="→ iso-8859-10" data-dead-href="/w/iso-8859-10.ko" class="keyword dead">ISO 8859-10</a>, <a title="→ iso-8859-13" data-dead-href="/w/iso-8859-13.ko" class="keyword dead">ISO 8859-13</a>, <a title="→ iso-8859-14" data-dead-href="/w/iso-8859-14.ko" class="keyword dead">ISO 8859-14</a>, <a title="→ iso-8859-15" data-dead-href="/w/iso-8859-15.ko" class="keyword dead">ISO 8859-15</a>, <a title="→ iso-8859-16" data-dead-href="/w/iso-8859-16.ko" class="keyword dead">ISO 8859-16</a></li>
+<li><a title="→ 키릴문자" data-dead-href="/w/%ED%82%A4%EB%A6%B4%EB%AC%B8%EC%9E%90.ko" class="keyword dead">키릴문자</a>: <a title="→ iso-8859-5" data-dead-href="/w/iso-8859-5.ko" class="keyword dead">ISO 8859-5</a>, <a title="→ koi8-r" data-dead-href="/w/koi8-r.ko" class="keyword dead">KOI8-R</a>, <a title="→ koi8-u" data-dead-href="/w/koi8-u.ko" class="keyword dead">KOI8-U</a> 등</li>
+<li>한국어 (<a href="/w/%ED%95%9C%EA%B8%80.ko" title="→ 한글" class="keyword">한글</a>): <a href="/w/ks-x-1001.ko" title="→ ks-x-1001" class="keyword">KS X 1001</a>, <a href="/w/ks-x-1002.ko" title="→ ks-x-1002" class="keyword">KS X 1002</a>, <a title="→ ks-x-1003" data-dead-href="/w/ks-x-1003.ko" class="keyword dead">KS X 1003</a>, <a title="→ 국규9566" data-dead-href="/w/%EA%B5%AD%EA%B7%9C9566.ko" class="keyword dead">국규 9566</a>(…)</li>
+<li>일본어 (<a title="→ 가나" data-dead-href="/w/%EA%B0%80%EB%82%98.ko" class="keyword dead">가나</a>와 <a title="→ 칸지" data-dead-href="/w/%EC%B9%B8%EC%A7%80.ko" class="keyword dead">칸지</a>): <a title="→ jis-x-0201" data-dead-href="/w/jis-x-0201.ko" class="keyword dead">JIS X 0201</a>, <a title="→ jis-x-0208" data-dead-href="/w/jis-x-0208.ko" class="keyword dead">JIS X 0208</a>, <a title="→ jis-x-0212" data-dead-href="/w/jis-x-0212.ko" class="keyword dead">JIS X 0212</a>, <a title="→ jis-x-0213" data-dead-href="/w/jis-x-0213.ko" class="keyword dead">JIS X 0213</a></li>
+<li>중국어 (<a href="/w/%ED%95%9C%EC%9E%90.ko" title="→ 한자" class="keyword">한자</a>): <a title="→ gb-2312" data-dead-href="/w/gb-2312.ko" class="keyword dead">GB 2312</a> + GB/T 12345, <a title="→ gb-18030" data-dead-href="/w/gb-18030.ko" class="keyword dead">GB 18030</a>, <a title="→ cns-11643" data-dead-href="/w/cns-11643.ko" class="keyword dead">CNS 11643</a>, <a title="→ big5" data-dead-href="/w/big5.ko" class="keyword dead">Big5</a>, <a title="→ hkscs" data-dead-href="/w/hkscs.ko" class="keyword dead">HKSCS</a></li>
+</ul>
+<section class="footnotes"><hr />
+<section id="fn1"><h6>1</h6><p>대표적으로 <a title="→ html" data-dead-href="/w/html.ko" class="keyword dead">HTML</a>에서 문자 인코딩은 <code>charset</code>을 사용해서 (<a title="→ html5" data-dead-href="/w/html5.ko" class="keyword dead">HTML5</a>의 경우, <code>&lt;meta charset=utf-8&gt;</code>과 같이) 지정한다. <a href="#fnref1" class="footnote-back">▲</a></p></section>
+</section>
+</main>
+<footer>
+<p id="mearie-meta"><code><i class="mearie-logo"></i>/cset</code> | 마지막 수정 <time>2016-05-29T19:22:13+0000</time> (<code>12e94c38778d</code>)</p>
+<address>저작권자 &copy; 1999&ndash;2016, 강 성훈. <a href="/about/copyright.ko" rel="copyright">저작권을 약간 가집니다.</a></address>
+</footer>
+</body>
+</html>

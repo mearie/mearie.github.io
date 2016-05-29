@@ -1,0 +1,328 @@
+<!doctype html>
+<!--[if gt IE 8]>--><html lang="ko"><!--<![endif]--><!--[if lte IE 8]><html lang="ko" class="mearie-ancient"><![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Tour de IOCCC | 메아리</title>
+<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="canonical" href="/t/tour-de-ioccc/index.ko" />
+<link rel="shortlink" href="/occc" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
+<!--[if gt IE 6]><![IGNORE[-->
+<script src="/res/mearie.js"></script>
+<link rel="stylesheet" href="/res/main.css" />
+<!--<![endif]-->
+</head>
+<body>
+<header>
+<div id="mearie-logo">
+<a href="/index.ko" rel="home">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 182 186">
+<path d="M0 0h54v102h-35v52h35v32h-54m34-70h20v24h-20" />
+<path d="M64 0h54v100a22 22 0 0 0 0 56v30h-54m54-72a12 12 0 0 0 0 28v-28" />
+<path d="M128 0h54v102h-33v12h33v8h-33v32h33v32h-54m35-52h19v8h-19" />
+</svg>
+ 메아리</a>
+</div>
+<h1><span class="parent"><time>2015-09-08</time><br /></span>Tour de IOCCC</h1>
+</header>
+<main role="main">
+<p>C로 프로그래밍을 좀 해 본 사람이라면 <a href="http://ioccc.org/">IOCCC</a>라는 대회가 있다는 것을 알 지도 모르겠습니다. IOCCC, 즉 International Obfuscated C Code Contest는 난해한(obfuscated) C 코드를 겨루는 대회로 1984년부터 지금까지 꾸준히 계속 되고 있는 프로그래밍 컨테스트입니다. 이를테면 이런 코드지요.</p>
+<pre><code>int i;main(){for(;i[&quot;]&lt;i;++i){--i;}&quot;];read('-'-'-',i+++&quot;hell\
+o, world!\n&quot;,'/'/'/'));}read(j,i,p){write(j/p+p,i---j,i/i);}</code></pre>
+<p>“헉, 이게 무슨 코드야!”라고 생각하신다면 이 코드가 어떻게 돌아 가는지 <a href="1984-anonymous.html">직접</a> 확인해 보시길 바랍니다. 적어도 잘못된 코드는 아닙니다.</p>
+<p>난해한 코드는, 설령 가능하다 하더라도, 일면 쓸모 없어 보일 수 있습니다. 하지만 난해한 코드를 짜거나 해석하기 위해서는 프로그래밍 언어나 운영체제에 대한 깊은 지식이 필요하고, 난해한 코드를 짜는 다양한 기법들도 알려져 있기 때문에 결코 무시할 만한 것이 아닙니다. 이런 코드를 짤 수 있다는 것은 언어나 운영체제의 어두운 구석까지 잘 파악하고 있고, 따라서 그것들을 피해 가는 코드를 짤 수 있으며 비슷한 상황을 만났을 때 대처할 수 있다는 장점이 있지요. 그리고 무엇보다도 재미, 즉 만드는 사람에게 지적 및 기술적 희열을 안겨 주기도 합니다.</p>
+<p>저는 이 글에서 IOCCC 수상작에 대한 자세한 설명을 하려고 합니다. 그래서 글 제목도 유명한 자전거 경기인 뚜르 드 프랑스(Tour de France)를 따라서 Tour de IOCCC라고 붙였습니다.<a id="fnref1" class="footnote" href="#fn1"><sup><span>[</span>1<span>]</span></sup></a> 네. 물론 만든 사람도 많이 고생했겠지만 코드를 해석하는 것만으로도 상당한 노력이 필요하긴 합니다. 하지만, 일단 재밌지 않습니까? :)</p>
+<a name="more"><!-- more --></a>
+<h2><span class="header-section-number">1</span> 일러두기</h2>
+<p>이 글을 읽기 위해서는 어느 정도의 C 프로그래밍 지식이 필요하며, 최소한 포인터와 비트 연산에 대한 이해가 필요합니다. (복잡한 예시에 대해서는 글에서 따로 설명하지만 그래도 개념 자체는 알고 있어야 합니다.) 또한 IOCCC는 유닉스 환경을 기본으로 하기 때문에 여기에 대한 이해가 있으면 좀 더 이해가 편합니다.</p>
+<p>이 글은 <a href="http://mearie.org/">강 성훈</a>이 썼으며, <a href="http://creativecommons.org/licenses/by-nc-sa/2.0/kr/">크리에이티브 커먼즈 저작자표시-비영리-동일조건변경허락 2.0 대한민국</a> 라이선스에 따라 비영리 목적으로 사용할 수 있습니다.<a id="fnref2" class="footnote" href="#fn2"><sup><span>[</span>2<span>]</span></sup></a> 원본 코드의 저작권은 퍼블릭 도메인(public domain)에 속하여 저작권이 없습니다.</p>
+<p>이 글의 원본은 <a href="http://hg.mearie.org/document/tour-de-ioccc/">머큐리얼 저장소</a>에서 작업되고 있습니다. HTML 변환을 위해서는 <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>이 필요합니다. 혹시 도움을 주실 수 있는 분께서는 미리 저에게 연락하시거나 머큐리얼 저장소를 복제(<code>hg clone</code>)한 뒤 작업 후 알려 주시면 제가 반영하도록 하겠습니다.</p>
+<h2><span class="header-section-number">2</span> 시작하기 전에</h2>
+<ul>
+<li><s><a href="start-environment.html">개발 환경 만들기</a></s></li>
+<li><s><a href="start-techniques.html">자주 쓰이는 기법들</a></s></li>
+<li><a href="start-legacy.html">옛날의 C 언어</a></li>
+</ul>
+<h2><span class="header-section-number">3</span> 1회: 1984년</h2>
+<ul>
+<li><a href="1984-anonymous.html">anonymous</a> (2009-01-14)</li>
+<li><a href="1984-decot.html">decot</a> (2009-01-18)</li>
+<li><s><a href="1984-laman.html">laman</a></s></li>
+<li><a href="1984-mullender.html">mullender</a> (2009-01-18 <em>TODO</em>)</li>
+</ul>
+<h2><span class="header-section-number">4</span> 2회: 1985년</h2>
+<ul>
+<li><s><a href="1985-applin.html">applin</a></s></li>
+<li><s><a href="1985-august.html">august</a></s></li>
+<li><s><a href="1985-lycklama.html">lycklama</a></s></li>
+<li><s><a href="1985-shapiro.html">shapiro</a></s></li>
+<li><a href="1985-sicherman.html">sicherman</a> (2009-01-17)</li>
+</ul>
+<h2><span class="header-section-number">5</span> 3회: 1986년</h2>
+<ul>
+<li><s><a href="1986-applin.html">applin</a></s></li>
+<li><s><a href="1986-august.html">august</a></s></li>
+<li><s><a href="1986-bright.html">bright</a></s></li>
+<li><s><a href="1986-hague.html">hague</a></s></li>
+<li><s><a href="1986-holloway.html">holloway</a></s></li>
+<li><s><a href="1986-marshall.html">marshall</a></s></li>
+<li><s><a href="1986-pawka.html">pawka</a></s></li>
+<li><a href="1986-stein.html">stein</a> (2009-01-20)</li>
+<li><s><a href="1986-wall.html">wall</a></s></li>
+</ul>
+<h2><span class="header-section-number">6</span> 4회: 1987년</h2>
+<ul>
+<li><s><a href="1987-biggar.html">biggar</a></s></li>
+<li><s><a href="1987-heckbert.html">heckbert</a></s></li>
+<li><s><a href="1987-hines.html">hines</a></s></li>
+<li><s><a href="1987-korn.html">korn</a></s></li>
+<li><s><a href="1987-lievaart.html">lievaart</a></s></li>
+<li><s><a href="1987-wall.html">wall</a></s></li>
+<li><s><a href="1987-westley.html">westley</a></s></li>
+</ul>
+<h2><span class="header-section-number">7</span> 5회: 1988년</h2>
+<ul>
+<li><s><a href="1988-applin.html">applin</a></s></li>
+<li><s><a href="1988-dale.html">dale</a></s></li>
+<li><s><a href="1988-isaak.html">isaak</a></s></li>
+<li><a href="1988-litmaath.html">litmaath</a> (2009-01-18)</li>
+<li><s><a href="1988-phillipps.html">phillipps</a></s></li>
+<li><s><a href="1988-reddy.html">reddy</a></s></li>
+<li><s><a href="1988-robison.html">robison</a></s></li>
+<li><a href="1988-spinellis.html">spinellis</a> (2009-01-18)</li>
+<li><s><a href="1988-westley.html">westley</a></s></li>
+</ul>
+<h2><span class="header-section-number">8</span> 6회: 1989년</h2>
+<ul>
+<li><s><a href="1989-fubar.html">fubar</a></s></li>
+<li><s><a href="1989-jar.1.html">jar.1</a></s></li>
+<li><s><a href="1989-jar.2.html">jar.2</a></s></li>
+<li><s><a href="1989-ovdluhe.html">ovdluhe</a></s></li>
+<li><s><a href="1989-paul.html">paul</a></s></li>
+<li><s><a href="1989-robison.html">robison</a></s></li>
+<li><s><a href="1989-roemer.html">roemer</a></s></li>
+<li><s><a href="1989-tromp.html">tromp</a></s></li>
+<li><s><a href="1989-vanb.html">vanb</a></s></li>
+<li><s><a href="1989-westley.html">westley</a></s></li>
+</ul>
+<h2><span class="header-section-number">9</span> 7회: 1990년</h2>
+<ul>
+<li><s><a href="1990-baruch.html">baruch</a></s></li>
+<li><s><a href="1990-cmills.html">cmills</a></s></li>
+<li><s><a href="1990-dds.html">dds</a></s></li>
+<li><s><a href="1990-dg.html">dg</a></s></li>
+<li><s><a href="1990-jaw.html">jaw</a></s></li>
+<li><s><a href="1990-pjr.html">pjr</a></s></li>
+<li><s><a href="1990-scjones.html">scjones</a></s></li>
+<li><s><a href="1990-stig.html">stig</a></s></li>
+<li><s><a href="1990-tbr.html">tbr</a></s></li>
+<li><s><a href="1990-theorem.html">theorem</a></s></li>
+<li><s><a href="1990-westley.html">westley</a></s></li>
+</ul>
+<h2><span class="header-section-number">10</span> 8회: 1991년</h2>
+<ul>
+<li><s><a href="1991-ant.html">ant</a></s></li>
+<li><s><a href="1991-brnstnd.html">brnstnd</a></s></li>
+<li><s><a href="1991-buzzard.html">buzzard</a></s></li>
+<li><s><a href="1991-cdupont.html">cdupont</a></s></li>
+<li><s><a href="1991-davidguy.html">davidguy</a></s></li>
+<li><s><a href="1991-dds.html">dds</a></s></li>
+<li><s><a href="1991-fine.html">fine</a></s></li>
+<li><s><a href="1991-rince.html">rince</a></s></li>
+<li><s><a href="1991-westley.html">westley</a></s></li>
+</ul>
+<h2><span class="header-section-number">11</span> 9회: 1992년</h2>
+<ul>
+<li><s><a href="1992-adrian.html">adrian</a></s></li>
+<li><s><a href="1992-albert.html">albert</a></s></li>
+<li><s><a href="1992-ant.html">ant</a></s></li>
+<li><s><a href="1992-buzzard.1.html">buzzard.1</a></s></li>
+<li><s><a href="1992-buzzard.2.html">buzzard.2</a></s></li>
+<li><s><a href="1992-gson.html">gson</a></s></li>
+<li><s><a href="1992-imc.html">imc</a></s></li>
+<li><s><a href="1992-kivinen.html">kivinen</a></s></li>
+<li><s><a href="1992-lush.html">lush</a></s></li>
+<li><s><a href="1992-marangon.html">marangon</a></s></li>
+<li><s><a href="1992-nathan.html">nathan</a></s></li>
+<li><s><a href="1992-vern.html">vern</a></s></li>
+<li><s><a href="1992-westley.html">westley</a></s></li>
+</ul>
+<h2><span class="header-section-number">12</span> 10회: 1993년</h2>
+<ul>
+<li><s><a href="1993-ant.html">ant</a></s></li>
+<li><s><a href="1993-cmills.html">cmills</a></s></li>
+<li><a href="1993-dgibson.html">dgibson</a> (2009-01-20 <em>TODO</em>)</li>
+<li><s><a href="1993-ejb.html">ejb</a></s></li>
+<li><s><a href="1993-jonth.html">jonth</a></s></li>
+<li><s><a href="1993-leo.html">leo</a></s></li>
+<li><s><a href="1993-lmfjyh.html">lmfjyh</a></s></li>
+<li><s><a href="1993-plummer.html">plummer</a></s></li>
+<li><s><a href="1993-rince.html">rince</a></s></li>
+<li><s><a href="1993-schnitzi.html">schnitzi</a></s></li>
+<li><s><a href="1993-vanb.html">vanb</a></s></li>
+</ul>
+<h2><span class="header-section-number">13</span> 11회: 1994년</h2>
+<ul>
+<li><s><a href="1994-dodsond1.html">dodsond1</a></s></li>
+<li><s><a href="1994-dodsond2.html">dodsond2</a></s></li>
+<li><s><a href="1994-horton.html">horton</a></s></li>
+<li><s><a href="1994-imc.html">imc</a></s></li>
+<li><s><a href="1994-ldb.html">ldb</a></s></li>
+<li><s><a href="1994-schnitzi.html">schnitzi</a></s></li>
+<li><s><a href="1994-shapiro.html">shapiro</a></s></li>
+<li><a href="1994-smr.html">smr</a> (2009-01-17)</li>
+<li><s><a href="1994-tvr.html">tvr</a></s></li>
+<li><s><a href="1994-weisberg.html">weisberg</a></s></li>
+<li><a href="1994-westley.html">westley</a> (2009-01-20)</li>
+</ul>
+<h2><span class="header-section-number">14</span> 12회: 1995년</h2>
+<ul>
+<li><s><a href="1995-cdua.html">cdua</a></s></li>
+<li><s><a href="1995-dodsond1.html">dodsond1</a></s></li>
+<li><s><a href="1995-dodsond2.html">dodsond2</a></s></li>
+<li><s><a href="1995-esde.html">esde</a></s></li>
+<li><s><a href="1995-garry.html">garry</a></s></li>
+<li><a href="1995-heathbar.html">heathbar</a> (2009-01-18)</li>
+<li><s><a href="1995-leob.html">leob</a></s></li>
+<li><s><a href="1995-makarios.html">makarios</a></s></li>
+<li><s><a href="1995-savastio.html">savastio</a></s></li>
+<li><s><a href="1995-schnitzi.html">schnitzi</a></s></li>
+<li><s><a href="1995-spinellis.html">spinellis</a></s></li>
+<li><s><a href="1995-vanschnitz.html">vanschnitz</a></s></li>
+</ul>
+<h2><span class="header-section-number">15</span> 13회: 1996년</h2>
+<ul>
+<li><s><a href="1996-august.html">august</a></s></li>
+<li><s><a href="1996-dalbec.html">dalbec</a></s></li>
+<li><s><a href="1996-eldby.html">eldby</a></s></li>
+<li><s><a href="1996-gandalf.html">gandalf</a></s></li>
+<li><s><a href="1996-huffman.html">huffman</a></s></li>
+<li><s><a href="1996-jonth.html">jonth</a></s></li>
+<li><s><a href="1996-rcm.html">rcm</a></s></li>
+<li><s><a href="1996-schweikh1.html">schweikh1</a></s></li>
+<li><s><a href="1996-schweikh2.html">schweikh2</a></s></li>
+<li><s><a href="1996-schweikh3.html">schweikh3</a></s></li>
+<li><s><a href="1996-westley.html">westley</a></s></li>
+</ul>
+<h2><span class="header-section-number">16</span> 14회: 1998년</h2>
+<ul>
+<li><s><a href="1998-banks.html">banks</a></s></li>
+<li><s><a href="1998-bas1.html">bas1</a></s></li>
+<li><s><a href="1998-bas2.html">bas2</a></s></li>
+<li><s><a href="1998-chaos.html">chaos</a></s></li>
+<li><s><a href="1998-df.html">df</a></s></li>
+<li><s><a href="1998-dlowe.html">dlowe</a></s></li>
+<li><s><a href="1998-dloweneil.html">dloweneil</a></s></li>
+<li><s><a href="1998-dorssel.html">dorssel</a></s></li>
+<li><s><a href="1998-fanf.html">fanf</a></s></li>
+<li><s><a href="1998-schnitzi.html">schnitzi</a></s></li>
+<li><s><a href="1998-schweikh1.html">schweikh1</a></s></li>
+<li><s><a href="1998-schweikh2.html">schweikh2</a></s></li>
+<li><s><a href="1998-schweikh3.html">schweikh3</a></s></li>
+<li><s><a href="1998-tomtorfs.html">tomtorfs</a></s></li>
+</ul>
+<h2><span class="header-section-number">17</span> 15회: 2000년</h2>
+<ul>
+<li><s><a href="2000-anderson.html">anderson</a></s></li>
+<li><s><a href="2000-bellard.html">bellard</a></s></li>
+<li><s><a href="2000-bmeyer.html">bmeyer</a></s></li>
+<li><s><a href="2000-briddlebane.html">briddlebane</a></s></li>
+<li><a href="2000-dhyang.html">dhyang</a> (2009-01-15)</li>
+<li><s><a href="2000-dlowe.html">dlowe</a></s></li>
+<li><s><a href="2000-jarijyrki.html">jarijyrki</a></s></li>
+<li><a href="2000-natori.html">natori</a> (2009-01-17)</li>
+<li><s><a href="2000-primenum.html">primenum</a></s></li>
+<li><s><a href="2000-rince.html">rince</a></s></li>
+<li><s><a href="2000-robison.html">robison</a></s></li>
+<li><s><a href="2000-schneiderwent.html">schneiderwent</a></s></li>
+<li><s><a href="2000-thadgavin.html">thadgavin</a></s></li>
+<li><s><a href="2000-tomx.html">tomx</a></s></li>
+</ul>
+<h2><span class="header-section-number">18</span> 16회: 2001년</h2>
+<ul>
+<li><s><a href="2001-anonymous.html">anonymous</a></s></li>
+<li><s><a href="2001-bellard.html">bellard</a></s></li>
+<li><s><a href="2001-cheong.html">cheong</a></s></li>
+<li><a href="2001-coupard.html">coupard</a> (2009-01-19 <em>TODO 코드 분석만 완료</em>)</li>
+<li><s><a href="2001-ctk.html">ctk</a></s></li>
+<li><s><a href="2001-dgbeards.html">dgbeards</a></s></li>
+<li><s><a href="2001-herrmann1.html">herrmann1</a></s></li>
+<li><s><a href="2001-herrmann2.html">herrmann2</a></s></li>
+<li><s><a href="2001-jason.html">jason</a></s></li>
+<li><s><a href="2001-kev.html">kev</a></s></li>
+<li><s><a href="2001-ollinger.html">ollinger</a></s></li>
+<li><s><a href="2001-rosten.html">rosten</a></s></li>
+<li><s><a href="2001-schweikh.html">schweikh</a></s></li>
+<li><s><a href="2001-westley.html">westley</a></s></li>
+<li><s><a href="2001-williams.html">williams</a></s></li>
+</ul>
+<h2><span class="header-section-number">19</span> 17회: 2004년</h2>
+<ul>
+<li><s><a href="2004-anonymous.html">anonymous</a></s></li>
+<li><s><a href="2004-arachnid.html">arachnid</a></s></li>
+<li><s><a href="2004-burley.html">burley</a></s></li>
+<li><s><a href="2004-gavare.html">gavare</a></s> (<em>예약</em>)</li>
+<li><s><a href="2004-gavin.html">gavin</a></s></li>
+<li><a href="2004-hibachi.html">hibachi</a> (2009-01-18)</li>
+<li><s><a href="2004-hoyle.html">hoyle</a></s></li>
+<li><s><a href="2004-jdalbec.html">jdalbec</a></s></li>
+<li><a href="2004-kopczynski.html">kopczynski</a> (2009-01-28 <em>TODO</em>)</li>
+<li><s><a href="2004-newbern.html">newbern</a></s></li>
+<li><s><a href="2004-omoikane.html">omoikane</a></s></li>
+<li><s><a href="2004-schnitzi.html">schnitzi</a></s></li>
+<li><s><a href="2004-sds.html">sds</a></s></li>
+<li><s><a href="2004-vik1.html">vik1</a></s></li>
+<li><s><a href="2004-vik2.html">vik2</a></s></li>
+</ul>
+<h2><span class="header-section-number">20</span> 18회: 2005년</h2>
+<ul>
+<li><s><a href="2005-aidan.html">aidan</a></s></li>
+<li><s><a href="2005-anon.html">anon</a></s></li>
+<li><s><a href="2005-boutines.html">boutines</a></s></li>
+<li><s><a href="2005-chia.html">chia</a></s></li>
+<li><s><a href="2005-giljade.html">giljade</a></s></li>
+<li><s><a href="2005-jetro.html">jetro</a></s></li>
+<li><s><a href="2005-klausler.html">klausler</a></s></li>
+<li><s><a href="2005-mikeash.html">mikeash</a></s></li>
+<li><s><a href="2005-mynx.html">mynx</a></s></li>
+<li><s><a href="2005-persano.html">persano</a></s></li>
+<li><s><a href="2005-sykes.html">sykes</a></s></li>
+<li><a href="2005-timwi.html">timwi</a> (2009-01-28)</li>
+<li><s><a href="2005-toledo.html">toledo</a></s></li>
+<li><s><a href="2005-vik.html">vik</a></s></li>
+<li><s><a href="2005-vince.html">vince</a></s></li>
+</ul>
+<h2><span class="header-section-number">21</span> 19회: 2006년</h2>
+<p>다음 목록은 <a href="http://decoded.org.ua/files/presentations/ioccc-2006-v024.key.pdf">2007년 발표 자료</a>를 토대로 만들어진 것입니다. 소스 코드는 2009년 1월 현재까지 완전히 공개되어 있지 않습니다.</p>
+<ul>
+<li><s><a href="2006-birken.html">birken</a></s></li>
+<li><s><a href="2006-borsanyi.html">borsanyi</a></s></li>
+<li><s><a href="2006-grothe.html">grothe</a></s></li>
+<li><s><a href="2006-hamre.html">hamre</a></s></li>
+<li><s><a href="2006-meyer.html">meyer</a></s></li>
+<li><s><a href="2006-monge.html">monge</a></s></li>
+<li><s><a href="2006-night.html">night</a></s></li>
+<li><s><a href="2006-sloane.html">sloane</a></s></li>
+<li><s><a href="2006-stewart.html">stewart</a></s></li>
+<li><s><a href="2006-sykes1.html">sykes1</a></s></li>
+<li><s><a href="2006-sykes2.html">sykes2</a></s></li>
+<li><a href="2006-toledo1.html">toledo1</a> (2009-03-08 <em>TODO</em>)</li>
+<li><s><a href="2006-toledo2.html">toledo2</a></s></li>
+<li><s><a href="2006-toledo3.html">toledo3</a></s></li>
+</ul>
+<section class="footnotes"><hr />
+<section id="fn1"><h6>1</h6><p>뚜르 드 프랑스는 프랑스 및 인접국에서 매년 열리는 자전거 경기로 경기 거리가 3천에서 4천 킬로미터에 이르는 대규모 경기입니다. 거리가 거리이니만큼 완주에는 80~100시간이라는 긴 시간이 필요합니다. 암을 이기고 무려 일곱 번이나 연속으로 우승한 랜스 암스트롱의 일화로도 유명하지요. <a href="#fnref1" class="footnote-back">▲</a></p></section>
+<section id="fn2"><h6>2</h6><p>IOCCC에서 수상한 소스 코드 및 포함된 데이터 파일을 제외한 나머지 저작물, 즉 힌트 파일(수상자와 심사위원의 코멘트)과 Makefile들은 다음과 같은 저작권 조항을 포함하고 있습니다.</p>
+<blockquote><p>Copyright © 2005, Landon Curt Noll, Simon Cooper, Peter Seebach and Leonid A. Broukhis. All Rights Reserved.</p>
+<p>Permission for personal, education or non-profit use is granted provided this copyright and notice are included in its entirety and remains unaltered. All other uses must receive prior permission in writing from the contest judges.</p></blockquote>
+<pre><code>This is a code.
+This is a code.</code></pre>
+<p>이 글은 IOCCC의 힌트 파일을 통째로 번역하거나 하지는 않지만, 단순 인용의 한계가 명확하지 않으므로 가능한한 문제를 피하기 위해 비영리 조항을 포함하고 있습니다. 만약 영리적 목적으로 사용하고 싶을 경우 저(강 성훈)와 IOCCC 심사위원들에게 각각 연락하시길 바랍니다. <a href="#fnref2" class="footnote-back">▲</a></p></section>
+</section>
+</main>
+<footer>
+<p id="mearie-meta"><code><i class="mearie-logo"></i>/occc</code> | 마지막 수정 <time>2016-05-29T19:22:13+0000</time> (<code>12e94c38778d</code>)</p>
+<address>저작권자 &copy; 1999&ndash;2016, 강 성훈. <a href="/about/copyright.ko" rel="copyright">저작권을 약간 가집니다.</a></address>
+</footer>
+</body>
+</html>

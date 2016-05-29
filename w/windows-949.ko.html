@@ -1,0 +1,52 @@
+<!doctype html>
+<!--[if gt IE 8]>--><html lang="ko"><!--<![endif]--><!--[if lte IE 8]><html lang="ko" class="mearie-ancient"><![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Windows-949 | 메아리</title>
+<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="canonical" href="/w/windows-949.ko" />
+<link rel="shortlink" href="/949" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
+<!--[if gt IE 6]><![IGNORE[-->
+<script src="/res/mearie.js"></script>
+<link rel="stylesheet" href="/res/main.css" />
+<!--<![endif]-->
+</head>
+<body>
+<header>
+<div id="mearie-logo">
+<a href="/index.ko" rel="home">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 182 186">
+<path d="M0 0h54v102h-35v52h35v32h-54m34-70h20v24h-20" />
+<path d="M64 0h54v100a22 22 0 0 0 0 56v30h-54m54-72a12 12 0 0 0 0 28v-28" />
+<path d="M128 0h54v102h-33v12h33v8h-33v32h33v32h-54m35-52h19v8h-19" />
+</svg>
+ 메아리</a>
+</div>
+<h1><span class="parent"><a href="/w/index.ko">낱말들</a><br /></span>Windows-949</h1>
+</header>
+<main role="main">
+<p><a title="→ 마이크로소프트윈도" data-dead-href="/w/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%86%8C%ED%94%84%ED%8A%B8%EC%9C%88%EB%8F%84.ko" class="keyword dead">마이크로소프트 윈도</a>에서 사용하는 <a href="/w/%ED%95%9C%EA%B8%80.ko" title="→ 한글" class="keyword">한글</a> <a href="/w/%EB%AC%B8%EC%9E%90%EC%9D%B8%EC%BD%94%EB%94%A9.ko" title="→ 문자인코딩" class="keyword">문자 인코딩</a>. 완성형 한글 인코딩(<a href="/w/euc-kr.ko" title="→ euc-kr" class="keyword">EUC-KR</a>)의 확장이라 <strong>확장 완성형</strong>이라고도 불렀으며, 윈도에서 문자 인코딩을 부르는 이름을 따서 <strong><a title="→ 코드페이지" data-dead-href="/w/%EC%BD%94%EB%93%9C%ED%8E%98%EC%9D%B4%EC%A7%80.ko" class="keyword dead">코드페이지</a> 949</strong>라고도 부른다. (Windows-949는 공식 <a title="→ iana" data-dead-href="/w/iana.ko" class="keyword dead">IANA</a> 이름이다.) <a title="→ 윈도95" data-dead-href="/w/%EC%9C%88%EB%8F%8495.ko" class="keyword dead">윈도 95</a>에서 처음으로 도입되었으며, 그 이전에는 그냥 EUC-KR만이 지원되었다.</p>
+<p>이 인코딩의 가장 큰 특징은, <a href="/w/ks-x-1001.ko" title="→ ks-x-1001" class="keyword">KS X 1001</a>과 이를 그대로 사용한 EUC-KR이 한글을 2350자 밖에 못 표현하는데 비해 11172자의 모든 현대 한글을 2바이트 안에 표현할 수 있다는 점이다. 그러나 EUC-KR이 이미 <code>A1 A1</code>부터 <code>FE FE</code>까지의 모든 영역을 KS X 1001에 사용하기 때문에, Windows-949에서는 첫째 바이트가 <code>81</code>부터 <code>C6</code>까지, 그리고 둘째 바이트가 <code>41</code>~<code>5A</code>(<a title="→ 로마자" data-dead-href="/w/%EB%A1%9C%EB%A7%88%EC%9E%90.ko" class="keyword dead">로마자</a> 대문자), <code>61</code>~<code>7A</code>(로마자 소문자), 그리고 <code>81</code>~<code>FE</code>인 세 영역 중 앞에서 설명한 영역과 겹치지 않는 부분에 KS X 1001에 없는 한글 8822자(이하 “확장 한글”)를 순서대로 할당해 놓았다. <a href="/w/shift_jis.ko" title="→ shift_jis" class="keyword">Shift_JIS</a>와 매우 유사한 모양이 되어 있는데, Shift_JIS보다는 기존에 이미 할당된 공간이 훨씬 적기 때문에<a id="fnref1" class="footnote" href="#fn1"><sup><span>[</span>1<span>]</span></sup></a> 상위 비트가 1이 아닌 둘째 바이트 때문에 문제가 생길 여지가 훨씬 적다. (적어도 Windows-949의 존재를 모르는 프로그램에서 확장 한글을 글자로조차 인식하지 못 하는 문제는 없다.)</p>
+<p>2바이트로 모든 것을 끝내려는 노력<a id="fnref2" class="footnote" href="#fn2"><sup><span>[</span>2<span>]</span></sup></a> 치고는 비교적 나쁘지 않은 결과였지만, 가뜩이나 <a title="→ 완성형조합형논쟁" data-dead-href="/w/%EC%99%84%EC%84%B1%ED%98%95%EC%A1%B0%ED%95%A9%ED%98%95%EB%85%BC%EC%9F%81.ko" class="keyword dead">완성형-조합형 논쟁</a>으로 시끄러웠던 시절에 또 다른 완성형 인코딩이 도입된다는 소식 때문에 상당한 반발을 불러 일으켰다. 반발을 못 이긴 <a title="→ 한국마이크로소프트" data-dead-href="/w/%ED%95%9C%EA%B5%AD%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%86%8C%ED%94%84%ED%8A%B8.ko" class="keyword dead">한국 마이크로소프트</a>는 <a title="→ 상용조합형" data-dead-href="/w/%EC%83%81%EC%9A%A9%EC%A1%B0%ED%95%A9%ED%98%95.ko" class="keyword dead">상용 조합형</a>을 코드 페이지 1361로 추가하긴 했는데, 이게 <code>WideCharToMultiByte</code> 같은 함수에서만 쓸 수 있고 시스템 전체 코드 페이지를 바꿀 수는 없는 것이라 <a title="→ 눈가리고아웅" data-dead-href="/w/%EB%88%88%EA%B0%80%EB%A6%AC%EA%B3%A0%EC%95%84%EC%9B%85.ko" class="keyword dead">눈가리고 아웅</a>이었다. 결과적으로는 나중에 <a href="/w/%EC%9C%A0%EB%8B%88%EC%BD%94%EB%93%9C.ko" title="→ 유니코드" class="keyword">유니코드</a>가 보편화되며 논쟁이 의미가 없게 되면서 유야무야되긴 했다.</p>
+<a name="more"><!-- more --></a>
+<h2><span class="header-section-number">1</span> EUC-KR과의 혼란</h2>
+<p>이 인코딩은 그 특성상 EUC-KR과 혼용되는 경우가 매우 많다. 비슷한 구조와 비슷한 역사를 지닌 <a title="→ 일본어" data-dead-href="/w/%EC%9D%BC%EB%B3%B8%EC%96%B4.ko" class="keyword dead">일본어</a> 문자 인코딩의 경우 <a title="→ euc-jp" data-dead-href="/w/euc-jp.ko" class="keyword dead">EUC-JP</a>와 Shift_JIS는 구조가 아예 다르기 때문에 혼용될 일이 없는데, Windows-949는 EUC-KR에 새로운 문자를 추가한 것에 불과하니 윈도의 시장 지배력과 맞물려 혼용되기 쉬울 수 밖에 없었다.</p>
+<p>이 문제는 특히 웹에서 매우 심해서, EUC-KR이라고 쓰여 있는 거의 모든 <a title="→ 웹페이지" data-dead-href="/w/%EC%9B%B9%ED%8E%98%EC%9D%B4%EC%A7%80.ko" class="keyword dead">웹페이지</a>는 항상 Windows-949로 해석해야 할 정도이다. 이걸 쓰여 있는 곧이 곧대로 받아 들인 <a title="→ 모질라" data-dead-href="/w/%EB%AA%A8%EC%A7%88%EB%9D%BC.ko" class="keyword dead">모질라</a> 초기 버전에서는 EUC-KR이라 쓰여 있는 웹 페이지에서 확장 한글을 입력할 때 Windows-949 식으로 2바이트 인코딩을 쓰는 게 아니라 <strong>KS X 1001 8바이트 인코딩</strong>을 써서 다른 브라우저에서는 깨지는 괴현상을 일으키곤 했다. 덕분에 <a title="→ html5" data-dead-href="/w/html5.ko" class="keyword dead">HTML5</a> 표준에는 명시적으로 <strong>EUC-KR이라고 쓰여 있는 인코딩을 무시하고 무조건 Windows-949로 구현할 것</strong>을 요구<a id="fnref3" class="footnote" href="#fn3"><sup><span>[</span>3<span>]</span></sup></a>하고 있을 정도니 말을 다 했다.</p>
+<h2><span class="header-section-number">2</span> 같이 보기</h2>
+<ul>
+<li><a href="/w/ks-x-1001.ko" title="→ ks-x-1001" class="keyword">KS X 1001</a></li>
+<li><a href="/w/euc-kr.ko" title="→ euc-kr" class="keyword">EUC-KR</a></li>
+</ul>
+<section class="footnotes"><hr />
+<section id="fn1"><h6>1</h6><p>Shift_JIS에서는 JIS X 0201에서 특정한 범위의 첫 바이트를 <strong>모두</strong> 할당해 버렸기 때문에 둘째 바이트에서 훨씬 넓은 범위를 사용해야 했다. <a href="#fnref1" class="footnote-back">▲</a></p></section>
+<section id="fn2"><h6>2</h6><p>기술적으로는 KS X 1001에서도 확장 한글을 입력할 수는 있지만, 네 개의 글자로 표현해야 하는데다가 결정적으로 구현하는 곳이 거의 없다. <a title="→ 모질라" data-dead-href="/w/%EB%AA%A8%EC%A7%88%EB%9D%BC.ko" class="keyword dead">모질라</a>가 거의 유일한 예. <a href="#fnref2" class="footnote-back">▲</a></p></section>
+<section id="fn3"><h6>3</h6><p><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/parsing.html#character-encodings-0">HTML Living Standard §11.2.2.2 Character encodings</a>. “Misinterpreted for compatibility”라고 부른다. <a href="#fnref3" class="footnote-back">▲</a></p></section>
+</section>
+</main>
+<footer>
+<p id="mearie-meta"><code><i class="mearie-logo"></i>/949</code> | 마지막 수정 <time>2016-05-29T19:22:13+0000</time> (<code>12e94c38778d</code>)</p>
+<address>저작권자 &copy; 1999&ndash;2016, 강 성훈. <a href="/about/copyright.ko" rel="copyright">저작권을 약간 가집니다.</a></address>
+</footer>
+</body>
+</html>
